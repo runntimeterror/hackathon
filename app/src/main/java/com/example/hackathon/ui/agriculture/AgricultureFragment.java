@@ -1,4 +1,4 @@
-package com.example.hackathon.ui.dashboard;
+package com.example.hackathon.ui.agriculture;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hackathon.databinding.FragmentDashboardBinding;
+import com.example.hackathon.databinding.FragmentAgricultureBinding;
 
-public class DashboardFragment extends Fragment {
+public class AgricultureFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentAgricultureBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        AgricultureViewModel agricultureViewModel =
+                new ViewModelProvider(this).get(AgricultureViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentAgricultureBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        agricultureViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
