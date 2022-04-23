@@ -1,4 +1,4 @@
-package com.example.hackathon.ui.notifications;
+package com.example.hackathon.ui.macroeconomic;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.hackathon.databinding.FragmentNotificationsBinding;
+import com.example.hackathon.databinding.FragmentMacroeconomicBinding;
 
-public class NotificationsFragment extends Fragment {
+public class MacroEconomicFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentMacroeconomicBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        MacroEconomicViewModel macroEconomicViewModel =
+                new ViewModelProvider(this).get(MacroEconomicViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentMacroeconomicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textHome;
+        macroEconomicViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
