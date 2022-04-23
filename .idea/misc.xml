@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.3861111111111111" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_persona.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18775024414062502" />
+        <entry key="app/src/main/res/layout/activity_persona.xml" value="0.26967620849609375" />
+        <entry key="app/src/main/res/layout/fragment_agriculture.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_debt.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/fragment_macroeconomic.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
