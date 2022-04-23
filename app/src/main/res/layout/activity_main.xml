@@ -17,6 +17,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/countrySelector"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|top"
+        android:src="@drawable/usa_flag"
+        android:contentDescription="Country Selector"
+        app:layout_constraintVertical_bias="0.02"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
