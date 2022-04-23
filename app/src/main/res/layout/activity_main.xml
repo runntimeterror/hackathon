@@ -18,6 +18,54 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/selectUsa"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|top"
+        android:contentDescription="Country Selector"
+        android:src="@drawable/usa_flag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias=".99"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        android:layout_margin="16dp"
+        android:onClick="selectUsa" />
+
+    <ImageView
+        android:id="@+id/selectIndia"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|top"
+        android:layout_margin="16dp"
+        android:contentDescription="Country Selector"
+        android:src="@drawable/india_flag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias=".99"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        android:onClick="selectIndia" />
+
+    <ImageView
+        android:id="@+id/selectChina"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|top"
+        android:contentDescription="Country Selector"
+        android:src="@drawable/china_flag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias=".99"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        android:layout_margin="16dp"
+        android:onClick="selectChina" />
+
+    <ImageView
         android:id="@+id/countrySelector"
         android:layout_width="50dp"
         android:layout_height="50dp"

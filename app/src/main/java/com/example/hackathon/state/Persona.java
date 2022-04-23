@@ -4,7 +4,7 @@ public class Persona {
     private static Persona persona_instance = null;
     public static final String GOVT_EMPLOYEE = "GOVT_EMPLOYEE";
     public static final String DATA_SCIENTIST = "DATA_SCIENTIST";
-    public String userPersona;
+    private String userPersona;
     private Persona()
     {
     }
