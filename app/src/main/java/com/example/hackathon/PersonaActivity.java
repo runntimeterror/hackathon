@@ -2,14 +2,18 @@ package com.example.hackathon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.state.Persona;
+import com.example.hackathon.ui.TestingRepoViewModel;
 
 public class PersonaActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,13 +25,6 @@ public class PersonaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 appPersona.setUserPersona(appPersona.GOVT_EMPLOYEE);
-                switchToMainActivity(v);
-            }
-        });
-        buttonDataPersona.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                appPersona.setUserPersona(appPersona.DATA_SCIENTIST);
                 switchToMainActivity(v);
             }
         });
