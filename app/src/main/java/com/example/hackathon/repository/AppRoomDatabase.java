@@ -7,6 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.hackathon.repository.aggriculture.FertilizerDao;
 import com.example.hackathon.repository.aggriculture.FertilizerEntity;
 import com.example.hackathon.repository.aggriculture.ValueAddDao;
 import com.example.hackathon.repository.aggriculture.ValueAddEntity;
@@ -26,6 +27,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract AnnualGDPDao annualGDPDao();
     public abstract CurrentAccountBalanceDao currentAccountBalanceDao();
     public abstract ValueAddDao valueAddDao();
+    public abstract FertilizerDao fertilizerDao();
     private static AppRoomDatabase INSTANCE;
 
     public static AppRoomDatabase getDatabase(final Context context) {

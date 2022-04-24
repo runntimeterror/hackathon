@@ -3,6 +3,7 @@ package com.example.hackathon.repository.aggriculture;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
 @Entity(tableName = "fertilizer")
 public class FertilizerEntity {
     @PrimaryKey

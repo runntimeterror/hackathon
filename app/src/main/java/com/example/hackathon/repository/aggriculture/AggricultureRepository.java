@@ -19,7 +19,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AggricultureRepository {
-    private ValueAddDao valueAddDao;
+    private final ValueAddDao valueAddDao;
+    private final FertilizerDao fertilizerDao;
 //    private CurrentAccountBalanceDao currentAccountBalanceDao;
     //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
     private final MutableLiveData<HashMap<String, List<ValueAddEntity>>> searchResults = new MutableLiveData<>();
@@ -30,6 +31,7 @@ public class AggricultureRepository {
         AppRoomDatabase db;
         db = AppRoomDatabase.getDatabase(application);
         valueAddDao = db.valueAddDao();
+        fertilizerDao = db.fertilizerDao();
 //        currentAccountBalanceDao = db.currentAccountBalanceDao();
     }
 
@@ -43,7 +45,7 @@ public class AggricultureRepository {
         }
     };
 
-    public void findAnnualGDPs(int startYear, int endYear) {
+    public void findValueAdd(int startYear, int endYear) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
@@ -63,6 +65,32 @@ public class AggricultureRepository {
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
             valueAddDao.insertValueAdd(annualGDPEntity);
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
+//            handler.sendEmptyMessage(0);
+        });
+        executor.shutdown();
+    }
+
+    public void findFertilizer(int startYear, int endYear) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
+            results = fertilizerDao.findFertilizer(startYear, endYear);
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
+            String graphType = "MEG2";
+            Message msg = Message.obtain();
+            msg.obj = graphType;
+            msg.setTarget(handler);
+            msg.sendToTarget();
+        });
+        executor.shutdown();
+    }
+
+    public void insertFertilizer(FertilizerEntity fertilizerEntity) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
+            fertilizerDao.insertFertilizer(fertilizerEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });
