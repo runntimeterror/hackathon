@@ -32,33 +32,7 @@
             android:contentDescription="MACRO_ECONOMY"
             android:text="GDP Current" />
 
-        <CheckBox
-            android:id="@+id/MEG3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="MACRO_ECONOMY"
-            android:text="Current Account Balance (% of GDP)" />
 
-        <CheckBox
-            android:id="@+id/MEG4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="MACRO_ECONOMY"
-            android:text="Foreign Direct Investment (BoP, current USD)" />
-
-        <CheckBox
-            android:id="@+id/MEG5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="MACRO_ECONOMY"
-            android:text="Foreign Direct Investment, net inflows (% of GDP)" />
-
-        <CheckBox
-            android:id="@+id/MEG6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="MACRO_ECONOMY"
-            android:text="FDI-NetOutflows(% of GDP)" />
     </LinearLayout>
 
     <Button
