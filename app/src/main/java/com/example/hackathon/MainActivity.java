@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFABMenu() {
         isFABOpen = true;
-        iconUsa.animate().translationY(getResources().getDimension(R.dimen.standard_55));
-        iconIndia.animate().translationY(getResources().getDimension(R.dimen.standard_105));
-        iconChina.animate().translationY(getResources().getDimension(R.dimen.standard_155));
+        iconUsa.animate().translationX(-getResources().getDimension(R.dimen.standard_55));
+        iconIndia.animate().translationX(-getResources().getDimension(R.dimen.standard_105));
+        iconChina.animate().translationX(-getResources().getDimension(R.dimen.standard_155));
         countrySelector.setImageResource(R.drawable.icon_cancel);
     }
 
@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         isFABOpen = false;
-        iconUsa.animate().translationY(0);
-        iconIndia.animate().translationY(0);
-        iconChina.animate().translationY(0);
+        iconUsa.animate().translationX(0);
+        iconIndia.animate().translationX(0);
+        iconChina.animate().translationX(0);
     }
 
     public void selectUsa(View v) {

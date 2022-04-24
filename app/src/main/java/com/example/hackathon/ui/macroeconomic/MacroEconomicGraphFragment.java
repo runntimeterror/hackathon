@@ -1,5 +1,6 @@
 package com.example.hackathon.ui.macroeconomic;
 
+import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -172,22 +173,23 @@ public class MacroEconomicGraphFragment extends Fragment {
 //            }
 //        });
 
-        int[][] hardcodedSeedData = {
-                {2014, 37029, 597164, 5433000},
-                {2015, 3702980, 597160, 543300},
-                {2016, 3702098, 59716, 543300},
-                {2017, 370298, 597016, 543000},
-                {2018, 3702098, 590716, 53300},
-                {2019, 370298, 597106, 54300},
-                {2020, 370298, 597016, 53300},
+        Long[][] hardcodedSeedData = {
+                {37029L, 597164L, 5433000L},
+                {3702980L, 597160L, 543300L},
+                {3702098L, 59716L, 543300L},
+                {370298L, 597016L, 543000L},
+                {3702098L, 590716L, 53300L},
+                {370298L, 597106L, 54300L},
+                {370298L, 597016L, 53300L},
         };
 
-        for (int[] seed : hardcodedSeedData) {
+        int year = 2014;
+        for (Long[] seed : hardcodedSeedData) {
             AnnualGDPEntity entity = new AnnualGDPEntity();
-            entity.setYear(seed[0]);
-            entity.setIndiaGDP(seed[1]);
-            entity.setChinaGDP(seed[2]);
-            entity.setUsaGDP(seed[0]);
+            entity.setYear(year++);
+            entity.setIndiaGDP(seed[0]);
+            entity.setChinaGDP(seed[1]);
+            entity.setUsaGDP(seed[2]);
 
             testingRepoViewModel.insertGDPs(entity);
         }
@@ -195,7 +197,12 @@ public class MacroEconomicGraphFragment extends Fragment {
         testingRepoViewModel.findAnnualGDPs(2014, 2020);
 
 //        try {
-//            FileReader file = new FileReader("database/annualgdptable.csv");
+////            AssetFileDescriptor descriptor = getContext().getAssets().open("annualgdptable.csv");
+////            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", descriptor.getFileDescriptor().toString());
+////            InputStream file = getContext().getAssets().open("images/names.txt");
+//
+//            FileReader file = new FileReader("annualgdptable.csv");
+////            BufferedReader buffer = new BufferedReader(new InputStreamReader(file));
 //            BufferedReader buffer = new BufferedReader(file);
 //            String line = "";
 ////            String tableName ="annualgdps";
@@ -209,9 +216,9 @@ public class MacroEconomicGraphFragment extends Fragment {
 //                String[] str = line.split(",");
 //                AnnualGDPEntity entity = new AnnualGDPEntity();
 //                entity.setYear(Integer.valueOf(str[0]));
-//                entity.setIndiaGDP(Integer.valueOf(str[1]));
-//                entity.setChinaGDP(Integer.valueOf(str[2]));
-//                entity.setUsaGDP(Integer.valueOf(str[3]));
+//                entity.setIndiaGDP(Long.valueOf(str[1]));
+//                entity.setChinaGDP(Long.valueOf(str[2]));
+//                entity.setUsaGDP(Long.valueOf(str[3]));
 //                testingRepoViewModel.insertGDPs(entity);
 //            }
 ////            db.setTransactionSuccessful();
@@ -226,7 +233,6 @@ public class MacroEconomicGraphFragment extends Fragment {
 
     private List<DataEntry> setData(HashMap<String, List<GraphValues>> rawData) {
         List<DataEntry> seriesData = new ArrayList<>();
-
         Integer noOfGraphs = rawData.size();
 
         List<GraphValues> graph1;
@@ -560,8 +566,8 @@ public class MacroEconomicGraphFragment extends Fragment {
         list1.add(new GraphValues("1998",  + (int)(Math.random() * range) + min));
         list1.add(new GraphValues("1999",  + (int)(Math.random() * range) + min));
         list1.add(new GraphValues("2001",  + (int)(Math.random() * range) + min));
-        list1.add(new GraphValues("2002",  + (int)(Math.random() * range) + min));
         list1.add(new GraphValues("2003",  + (int)(Math.random() * range) + min));
+        list1.add(new GraphValues("2002",  + (int)(Math.random() * range) + min));
         list1.add(new GraphValues("2004",  + (int)(Math.random() * range) + min));
         list1.add(new GraphValues("2005",  + (int)(Math.random() * range) + min));
         list1.add(new GraphValues("2006",  + (int)(Math.random() * range) + min));
