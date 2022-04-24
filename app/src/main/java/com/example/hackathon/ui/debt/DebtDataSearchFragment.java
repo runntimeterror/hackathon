@@ -46,6 +46,7 @@ public class DebtDataSearchFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Select at least one data source", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                ((DebtFragment) getParentFragment()).replaceFragments(DebtGraphFragment.class);
             }
         });
 

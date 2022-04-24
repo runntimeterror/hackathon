@@ -46,6 +46,7 @@ public class MacroEconomicDataSearchFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Select at least one data source", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                ((MacroEconomicFragment) getParentFragment()).replaceFragments(MacroEconomicGraphFragment.class);
             }
         });
 
