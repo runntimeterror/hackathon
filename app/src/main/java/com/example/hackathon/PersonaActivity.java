@@ -2,15 +2,12 @@ package com.example.hackathon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.state.Persona;
-import com.example.hackathon.ui.TestingRepoViewModel;
 
 public class PersonaActivity extends AppCompatActivity {
 
@@ -28,7 +25,15 @@ public class PersonaActivity extends AppCompatActivity {
                 switchToMainActivity(v);
             }
         });
+        buttonDataPersona.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appPersona.setUserPersona(appPersona.DATA_SCIENTIST);
+                switchToMainActivity(v);
+            }
+        });
     }
+
 
     public void switchToMainActivity(View view){
         Intent intent = new Intent(PersonaActivity.this, MainActivity.class);
