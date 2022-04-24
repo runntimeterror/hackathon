@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.hackathon.R;
+import com.example.hackathon.ui.macroeconomic.MacroEconomicFragment;
+import com.example.hackathon.ui.macroeconomic.MacroEconomicGraphFragment;
 
 import java.util.ArrayList;
 
@@ -47,7 +49,9 @@ public class AgricultureDataSearchFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Select at least one data source", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ((AgricultureFragment) getParentFragment()).replaceFragments(AgricultureGraphFragment.class);
+                AgricultureFragment parentFragment = (AgricultureFragment) getParentFragment();
+                (parentFragment.getAgricultureViewModel()).setCheckedGraphs(selectedStrings);
+                parentFragment.replaceFragments(AgricultureGraphFragment.class);
 
             }
         });

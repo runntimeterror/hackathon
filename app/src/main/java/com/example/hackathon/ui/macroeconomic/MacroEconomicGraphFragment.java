@@ -61,9 +61,9 @@ public class MacroEconomicGraphFragment extends Fragment {
 //        testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
        macroEconomicViewModel.getSearchResults().observe(
                 getViewLifecycleOwner(),
-                new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
-                    @Override
-                    public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
+               new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
+                   @Override
+                   public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
                         AnyChartView anyChartView = (AnyChartView) root.findViewById(R.id.any_chart_view);
                         anyChartView.setProgressBar((ProgressBar) root.findViewById(R.id.progressBar));
 
