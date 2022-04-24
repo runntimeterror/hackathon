@@ -29,10 +29,12 @@ public class MacroEconomicDataSearchFragment extends Fragment {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    String resourceId = view.getResources().getResourceName(compoundButton.getId());
+                    String graphId = resourceId.substring(resourceId.lastIndexOf("/") + 1);
                     if (b) {
-                        selectedStrings.add(compoundButton.getText().toString());
+                        selectedStrings.add(graphId);
                     } else {
-                        selectedStrings.remove(compoundButton.getText().toString());
+                        selectedStrings.remove(graphId);
                     }
                 }
             });

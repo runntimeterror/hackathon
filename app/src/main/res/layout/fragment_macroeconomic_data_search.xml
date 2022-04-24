@@ -19,42 +19,42 @@
         android:padding="30dp">
 
         <CheckBox
-            android:id="@+id/checkbox_0"
+            android:id="@+id/MEG1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="MACRO_ECONOMY"
             android:text="GDP Growth Rate" />
 
         <CheckBox
-            android:id="@+id/checkbox_1"
+            android:id="@+id/MEG2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="MACRO_ECONOMY"
             android:text="GDP Current" />
 
         <CheckBox
-            android:id="@+id/checkbox_2"
+            android:id="@+id/MEG3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="MACRO_ECONOMY"
             android:text="Current Account Balance (% of GDP)" />
 
         <CheckBox
-            android:id="@+id/checkbox_3"
+            android:id="@+id/MEG4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="MACRO_ECONOMY"
             android:text="Foreign Direct Investment (BoP, current USD)" />
 
         <CheckBox
-            android:id="@+id/checkbox_4"
+            android:id="@+id/MEG5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="MACRO_ECONOMY"
             android:text="Foreign Direct Investment, net inflows (% of GDP)" />
 
         <CheckBox
-            android:id="@+id/checkbox_5"
+            android:id="@+id/MEG6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="MACRO_ECONOMY"
