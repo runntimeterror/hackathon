@@ -28,7 +28,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     Builder dbBuilder = Room.databaseBuilder(context.getApplicationContext(),
                             AppRoomDatabase.class,
-                            "app_database");
+                            "app_database.db");
 
                     dbBuilder.setQueryCallback((query, bindArgs) -> {
                         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "SQL Query:" + query + "SQL Args" + bindArgs);

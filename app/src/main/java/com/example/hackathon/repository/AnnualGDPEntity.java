@@ -11,43 +11,43 @@ public class AnnualGDPEntity {
     private Integer year;
 
     @ColumnInfo(name="india")
-    private Integer indiaGDP;
+    private Long indiaGDP;
 
     @ColumnInfo(name="china")
-    private Integer chinaGDP;
+    private Long chinaGDP;
 
     @ColumnInfo(name="usa")
-    private Integer usaGDP;
+    private Long usaGDP;
 
     public Integer getYear() {
         return year;
     }
 
-    public Integer getIndiaGDP() {
+    public Long getIndiaGDP() {
         return indiaGDP;
     }
 
-    public Integer getChinaGDP() {
+    public Long getChinaGDP() {
         return chinaGDP;
     }
 
-    public Integer getUsaGDP() {
+    public Long getUsaGDP() {
         return usaGDP;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
-    public void setIndiaGDP(int indiaGDP) {
+    public void setIndiaGDP(Long indiaGDP) {
         this.indiaGDP = indiaGDP;
     }
 
-    public void setChinaGDP(int chinaGDP) {
+    public void setChinaGDP(Long chinaGDP) {
         this.chinaGDP = chinaGDP;
     }
 
-    public void setUsaGDP(int usaGDP) {
+    public void setUsaGDP(Long usaGDP) {
         this.usaGDP = usaGDP;
     }
 }
