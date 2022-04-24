@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface TotalReservesDao {
     @Query("SELECT * FROM fertilizer WHERE year BETWEEN :startYear AND :endYear")
-    List<TotalReservesEntity> findTotalReserves(int startYear, int endYear);
+    List<DebtServiceEntity> findTotalReserves(int startYear, int endYear);
 
     @Insert
     void insertTotalReserves(TotalReservesEntity totalReservesEntity);

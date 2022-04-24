@@ -6,14 +6,11 @@ import android.util.Log;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.hackathon.repository.AnnualGDPEntity;
-import com.example.hackathon.repository.AnnualGDPRepository;
-import com.example.hackathon.repository.CurrentAccountBalanceEntity;
+
+
 import com.example.hackathon.repository.aggriculture.AggricultureRepository;
 import com.example.hackathon.repository.aggriculture.FertilizerEntity;
-import com.example.hackathon.repository.aggriculture.ValueAddDao;
 import com.example.hackathon.repository.aggriculture.ValueAddEntity;
 
 import java.util.ArrayList;
