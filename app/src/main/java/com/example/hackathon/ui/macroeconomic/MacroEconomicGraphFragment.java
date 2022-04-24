@@ -1,6 +1,5 @@
 package com.example.hackathon.ui.macroeconomic;
 
-import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +9,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -29,15 +26,13 @@ import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.hatchfill.HatchFillType;
 import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
-import com.example.hackathon.ui.TestingRepoViewModel;
-import com.example.hackathon.ui.debt.DebtGraphFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class MacroEconomicGraphFragment extends Fragment {
-    private TestingRepoViewModel testingRepoViewModel;
+//    private TestingRepoViewModel testingRepoViewModel;
     // TODO :REMOVE
     int max = 100;
     int min = 1;
@@ -47,8 +42,9 @@ public class MacroEconomicGraphFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        View root =  inflater.inflate(R.layout.fragment_macroeconomic_graph, container, false);
-        testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
-        testingRepoViewModel.getSearchResults().observe(
+       MacroEconomicViewModel macroEconomicViewModel = ((MacroEconomicFragment) getParentFragment()).getMacroEconomicViewModel();
+//        testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
+       macroEconomicViewModel.getSearchResults().observe(
                 getViewLifecycleOwner(),
                 new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
                     @Override
@@ -192,10 +188,10 @@ public class MacroEconomicGraphFragment extends Fragment {
             entity.setChinaGDP(seed[1]);
             entity.setUsaGDP(seed[2]);
 
-            testingRepoViewModel.insertGDPs(entity);
+            macroEconomicViewModel.insertGDPs(entity);
         }
 
-        testingRepoViewModel.findAnnualGDPs(2014, 2020);
+        macroEconomicViewModel.findAnnualGDPs(2014, 2020);
 
 //        try {
 ////            AssetFileDescriptor descriptor = getContext().getAssets().open("annualgdptable.csv");
