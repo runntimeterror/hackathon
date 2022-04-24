@@ -11,6 +11,7 @@ import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.AnnualGDPRepository;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class MacroEconomicViewModel extends AndroidViewModel {
     private MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults;
     private final MutableLiveData<String> mText = new MutableLiveData<>();
     private ArrayList<String> checkedGraphs;
+
 
     public MacroEconomicViewModel(Application application) {
         super(application);
@@ -40,6 +42,7 @@ public class MacroEconomicViewModel extends AndroidViewModel {
     public ArrayList<String> getCheckedGraphs() {
         return checkedGraphs;
     }
+
 
     public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults() {
         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: getSearchResults");
