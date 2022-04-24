@@ -8,9 +8,17 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_persona.xml" value="0.26967620849609375" />
         <entry key="app/src/main/res/layout/fragment_agriculture.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_agriculture_graph.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_argiculture_data_search.xml" value="0.575" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_debt.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/fragment_debt_data_search.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_debt_graph.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_macroeconomic.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_macroeconomic_data_search.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_macroeconomic_graph.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/subfragment_macroeconomic_data_search.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/subfragment_macroeconomic_graph.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
