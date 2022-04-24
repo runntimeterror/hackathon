@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentDebtBinding;
 
 public class DebtFragment extends Fragment {
@@ -27,6 +29,13 @@ public class DebtFragment extends Fragment {
         final TextView textView = binding.textNotifications;
         debtViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        Fragment childFragment = new DebtDataSearchFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.debt_child_fragment_container, childFragment).commit();
     }
 
     @Override

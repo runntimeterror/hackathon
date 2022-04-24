@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentAgricultureBinding;
+import com.example.hackathon.ui.debt.DebtDataSearchFragment;
 
 public class AgricultureFragment extends Fragment {
 
@@ -27,6 +30,13 @@ public class AgricultureFragment extends Fragment {
         final TextView textView = binding.textDashboard;
         agricultureViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        Fragment childFragment = new DebtDataSearchFragment();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.agriculture_child_fragment_container, childFragment).commit();
     }
 
     @Override
