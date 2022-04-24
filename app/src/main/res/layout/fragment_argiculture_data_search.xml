@@ -19,35 +19,35 @@
         android:padding="30dp">
 
         <CheckBox
-            android:id="@+id/checkbox_0"
+            android:id="@+id/AG1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="AGRICULTURE"
             android:text="Agricultural Contribution (% GDP)" />
 
         <CheckBox
-            android:id="@+id/checkbox_1"
+            android:id="@+id/AG2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="AGRICULTURE"
             android:text="Manufacturing (% GDP)" />
 
         <CheckBox
-            android:id="@+id/checkbox_2"
+            android:id="@+id/AG3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="AGRICULTURE"
             android:text="Agriculture, forestry, and fishing, value added (annual % growth)" />
 
         <CheckBox
-            android:id="@+id/checkbox_3"
+            android:id="@+id/AG4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="AGRICULTURE"
             android:text="Fertilizer consumption (kilograms per hectare of arable land)" />
 
         <CheckBox
-            android:id="@+id/checkbox_4"
+            android:id="@+id/AG5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="AGRICULTURE"

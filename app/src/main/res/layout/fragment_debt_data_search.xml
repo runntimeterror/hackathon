@@ -19,42 +19,42 @@
         android:padding="30dp">
 
         <CheckBox
-            android:id="@+id/checkbox_0"
+            android:id="@+id/DG1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="DEBT"
             android:text="Total reserves in months of imports" />
 
         <CheckBox
-            android:id="@+id/checkbox_1"
+            android:id="@+id/DG2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="DEBT"
             android:text="Total reserves (includes gold, current USD)" />
 
         <CheckBox
-            android:id="@+id/checkbox_2"
+            android:id="@+id/DG3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="DEBT"
             android:text="Total reserves (% of total external debt)" />
 
         <CheckBox
-            android:id="@+id/checkbox_3"
+            android:id="@+id/DG4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="DEBT"
             android:text="Debt service (PPG and IMF only, % of exports of goods, services and primary income)" />
 
         <CheckBox
-            android:id="@+id/checkbox_4"
+            android:id="@+id/DG5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="DEBT"
             android:text="Total debt service (% of GNI)" />
 
         <CheckBox
-            android:id="@+id/checkbox_5"
+            android:id="@+id/DG6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="DEBT"
