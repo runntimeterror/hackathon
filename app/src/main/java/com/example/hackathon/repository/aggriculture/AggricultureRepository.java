@@ -52,7 +52,7 @@ public class AggricultureRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             results = valueAddDao.findValueAdd(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            String graphType = "MEG2";
+            String graphType = "AG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
             msg.setTarget(handler);
@@ -78,7 +78,7 @@ public class AggricultureRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             results = fertilizerDao.findFertilizer(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            String graphType = "MEG2";
+            String graphType = "AG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
             msg.setTarget(handler);

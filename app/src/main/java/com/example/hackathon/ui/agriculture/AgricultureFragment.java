@@ -12,20 +12,27 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentAgricultureBinding;
+import com.example.hackathon.ui.macroeconomic.MacroEconomicViewModel;
 
 public class AgricultureFragment extends Fragment {
 
     private FragmentAgricultureBinding binding;
-
+    private  AgricultureViewModel agricultureViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        AgricultureViewModel agricultureViewModel =
+        agricultureViewModel =
                 new ViewModelProvider(this).get(AgricultureViewModel.class);
 
         binding = FragmentAgricultureBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
+    }
+
+
+
+    public AgricultureViewModel getAgricultureViewModel() {
+        return agricultureViewModel;
     }
 
     @Override
