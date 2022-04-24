@@ -52,7 +52,7 @@ public class DebtRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             results = debtServiceDao.findDebtService(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            String graphType = "MEG2";
+            String graphType = "DG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
             msg.setTarget(handler);
@@ -72,20 +72,20 @@ public class DebtRepository {
         executor.shutdown();
     }
 
-//    public void findTotalService(int startYear, int endYear) {
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//        executor.submit(() -> {
-//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-//            results = totalReservesDao.findTotalReserves(startYear, endYear);
-//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-//            String graphType = "MEG2";
-//            Message msg = Message.obtain();
-//            msg.obj = graphType;
-//            msg.setTarget(handler);
-//            msg.sendToTarget();
-//        });
-//        executor.shutdown();
-//    }
+    public void findTotalService(int startYear, int endYear) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
+            results = totalReservesDao.findTotalReserves(startYear, endYear);
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
+            String graphType = "DG2";
+            Message msg = Message.obtain();
+            msg.obj = graphType;
+            msg.setTarget(handler);
+            msg.sendToTarget();
+        });
+        executor.shutdown();
+    }
 
     public void insertTotalReserves(TotalReservesEntity totalReservesEntity) {
         ExecutorService executor = Executors.newSingleThreadExecutor();

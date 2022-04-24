@@ -12,20 +12,28 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentDebtBinding;
+import com.example.hackathon.databinding.FragmentMacroeconomicBinding;
+import com.example.hackathon.ui.macroeconomic.MacroEconomicViewModel;
 
 public class DebtFragment extends Fragment {
 
     private FragmentDebtBinding binding;
 
+    private DebtViewModel debtViewModel;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DebtViewModel debtViewModel =
+        debtViewModel =
                 new ViewModelProvider(this).get(DebtViewModel.class);
 
         binding = FragmentDebtBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
+    }
+
+
+    public DebtViewModel getDebtViewModel() {
+        return debtViewModel;
     }
 
     @Override
