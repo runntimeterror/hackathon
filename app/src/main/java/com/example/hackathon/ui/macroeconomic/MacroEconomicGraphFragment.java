@@ -27,7 +27,6 @@ import com.anychart.graphics.vector.hatchfill.HatchFillType;
 import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.state.Country;
-import com.example.hackathon.ui.TestingRepoViewModel;
 import com.example.hackathon.ui.debt.DebtGraphFragment;
 
 import java.util.ArrayList;
@@ -55,12 +54,12 @@ public class MacroEconomicGraphFragment extends Fragment {
                     @Override
                     public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
                         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL",
-                                "MacroEconomicFragment:searchResults.observer.onChanged Length:" + gdps.get("meg2").size());
+                                "MacroEconomicFragment:searchResults.observer.onChanged Length:" + gdps.get("MEG2").size());
 
                         AnyChartView anyChartView = (AnyChartView) root.findViewById(R.id.any_chart_view);
                         anyChartView.setProgressBar((ProgressBar) root.findViewById(R.id.progressBar));
 
-                        anyChartView.setChart(GetGraph());
+                        anyChartView.setChart(GetGraph(gdps, macroEconomicViewModel.getCheckedGraphs()));
                     }
                 }
         );
@@ -131,8 +130,7 @@ public class MacroEconomicGraphFragment extends Fragment {
         return root;
     }
 
-    private Map<String, List<GraphValues>> TransaformData(Map<String, List<AnnualGDPEntity>> rawdata , ArrayList<String> graphs){
-        HashMap<String, List<GraphValues>> data  = new HashMap<String, List<GraphValues>>();
+    private Map<String, List<GraphValues>> TransaformData(HashMap<String, List<AnnualGDPEntity>> rawdata , ArrayList<String> graphs){
         String country = Country.getInstance().getSelectedCountry();
 
         // get only those values which are selected
@@ -166,9 +164,9 @@ public class MacroEconomicGraphFragment extends Fragment {
             transformedData.put(k, employees);
             });
 
-        return data;
+        return transformedData;
     }
-    private Cartesian3d GetGraph() {
+    private Cartesian3d GetGraph(HashMap<String, List<AnnualGDPEntity>> rawData, ArrayList<String> graphs) {
         Cartesian3d area3d = AnyChart.area3d();
 
         area3d.xAxis(0).labels().format("${%Value}");
@@ -185,10 +183,11 @@ public class MacroEconomicGraphFragment extends Fragment {
         area3d.title().useHtml(true);
         area3d.title().padding(0d, 0d, 20d, 0d);
 
-        HashMap<String, List<GraphValues>> rawData = getRawData();
+//        HashMap<String, List<GraphValues>> rawData = getRawData();
 
         //     List<DataEntry> seriesData = new ArrayList<>();
-        List<DataEntry> seriesData = setData(rawData);
+
+        List<DataEntry> seriesData = setData(TransaformData(rawData, graphs));
 
 //        seriesData.add(new CustomDataEntry("1986", 162, 42));
 //        seriesData.add(new CustomDataEntry("1987", 134, 54));
@@ -260,9 +259,9 @@ public class MacroEconomicGraphFragment extends Fragment {
         return area3d;
     }
 
-    private List<DataEntry> setData(HashMap<String, List<GraphValues>> rawData) {
+    private List<DataEntry> setData(Map<String, List<GraphValues>> transformedData) {
         List<DataEntry> seriesData = new ArrayList<>();
-        Integer noOfGraphs = rawData.size();
+        Integer noOfGraphs = transformedData.size();
 
         List<GraphValues> graph1;
         List<GraphValues> graph2;
@@ -272,7 +271,7 @@ public class MacroEconomicGraphFragment extends Fragment {
 
         switch (noOfGraphs) {
             case 1:
-                graph1 = rawData.get("graph1");
+                graph1 = transformedData.get("MEG1");
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -280,8 +279,8 @@ public class MacroEconomicGraphFragment extends Fragment {
                 }
                 break;
             case 2:
-                graph1 = rawData.get("graph1");
-                graph2 = rawData.get("graph2");
+                graph1 = transformedData.get("MEG1");
+                graph2 = transformedData.get("MEG2");
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
                     GraphValues g2 = graph2.get(i);
@@ -290,9 +289,9 @@ public class MacroEconomicGraphFragment extends Fragment {
 
                 break;
             case 3:
-                graph1 = rawData.get("graph1");
-                graph2 = rawData.get("graph2");
-                graph3 = rawData.get("graph3");
+                graph1 = transformedData.get("MEG1");
+                graph2 = transformedData.get("MEG2");
+                graph3 = transformedData.get("MEG3");
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -305,10 +304,10 @@ public class MacroEconomicGraphFragment extends Fragment {
                 }
                 break;
             case 4:
-                graph1 = rawData.get("graph1");
-                graph2 = rawData.get("graph2");
-                graph3 = rawData.get("graph3");
-                graph4 = rawData.get("graph4");
+                graph1 = transformedData.get("MEG1");
+                graph2 = transformedData.get("MEG2");
+                graph3 = transformedData.get("MEG3");
+                graph4 = transformedData.get("graph4");
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -323,11 +322,11 @@ public class MacroEconomicGraphFragment extends Fragment {
                 }
                 break;
             case 5:
-                graph1 = rawData.get("graph1");
-                graph2 = rawData.get("graph2");
-                graph3 = rawData.get("graph3");
-                graph4 = rawData.get("graph4");
-                graph5 = rawData.get("graph5");
+                graph1 = transformedData.get("graph1");
+                graph2 = transformedData.get("graph2");
+                graph3 = transformedData.get("graph3");
+                graph4 = transformedData.get("graph4");
+                graph5 = transformedData.get("graph5");
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
