@@ -28,8 +28,7 @@ public class MacroEconomicFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Fragment childFragment = new MacroEconomicGraphFragment();
-//        Fragment childFragment = new MacroEconomicDataSearchFragment();
+        Fragment childFragment = new MacroEconomicDataSearchFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.macroeconomic_child_fragment_container, childFragment).commit();
     }
