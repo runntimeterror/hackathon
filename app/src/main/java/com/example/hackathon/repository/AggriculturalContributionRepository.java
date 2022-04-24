@@ -8,26 +8,22 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.hackathon.state.Country;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AnnualGDPRepository {
-    private final AnnualGDPDao annualGDPDao;
-//    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
+public class AggriculturalContributionRepository {
+    private final AggriculturalContributionDao dao;
+    //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
     private final MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults = new MutableLiveData<>();
     private List<AnnualGDPEntity> results;
     private HashMap<String, List<AnnualGDPEntity>> aggregatedData = new HashMap<>();
 
-    public AnnualGDPRepository(Application application) {
+    public AggriculturalContributionRepository(Application application) {
         AppRoomDatabase db;
         db = AppRoomDatabase.getDatabase(application);
-        annualGDPDao = db.annualGDPDao();
+        dao = db.aggriculturalContributionDao();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -59,7 +55,7 @@ public class AnnualGDPRepository {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = annualGDPDao.findAnnualGDP(startYear, endYear);
+            results = dao.findAnnualGDP(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
             String graphType = "MEG2";
@@ -75,7 +71,7 @@ public class AnnualGDPRepository {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
-            annualGDPDao.insertAnnualGDP(annualGDPEntity);
+            dao.insertAnnualGDP(annualGDPEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });

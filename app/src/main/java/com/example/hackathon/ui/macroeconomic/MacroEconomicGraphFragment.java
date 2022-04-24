@@ -1,11 +1,19 @@
 package com.example.hackathon.ui.macroeconomic;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.net.URL;
 import java.util.stream.Collectors;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,6 +36,8 @@ import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.state.Country;
 import com.example.hackathon.ui.debt.DebtGraphFragment;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,28 +82,65 @@ public class MacroEconomicGraphFragment extends Fragment {
 //            }
 //        });
 
-        Long[][] hardcodedSeedData = {
-                {37029L, 597164L, 5433000L},
-                {3702980L, 597160L, 543300L},
-                {3702098L, 59716L, 543300L},
-                {370298L, 597016L, 543000L},
-                {3702098L, 590716L, 53300L},
-                {370298L, 597106L, 54300L},
-                {370298L, 597016L, 53300L},
-        };
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
 
-        int year = 2014;
-        for (Long[] seed : hardcodedSeedData) {
-            AnnualGDPEntity entity = new AnnualGDPEntity();
-            entity.setYear(year++);
-            entity.setIndiaGDP(seed[0]);
-            entity.setChinaGDP(seed[1]);
-            entity.setUsaGDP(seed[2]);
+            InputStream input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/annualgdptable.csv").openStream();
+            Reader reader1 = new InputStreamReader(input, "UTF-8");
+//            CSVReader reader = new CSVReader(reader1);
+            CSVReader reader = new CSVReaderBuilder(reader1).withSkipLines(1).build();
+            List<String[]> myEntries = reader.readAll();
 
-            macroEconomicViewModel.insertGDPs(entity);
+            for (String[] entry : myEntries) {
+                AnnualGDPEntity entity = new AnnualGDPEntity(
+                        Integer.valueOf(entry[0]),
+                        new BigDecimal(entry[1]).longValue(),
+                        new BigDecimal(entry[2]).longValue(),
+                        new BigDecimal(entry[3]).longValue()
+                );
+
+                macroEconomicViewModel.insertGDPs(entity);
+
+//                entity.setYear(Integer.valueOf(entry[0]));
+//                entity.setIndiaGrowthRate(Float.valueOf(entry[1]));
+//                entity.setChinaGrowthRate(Float.valueOf(entry[2]));
+//                entity.setUsaGrowthRate(Float.valueOf(entry[3]));
+//                entity.setIndiaGDP(Long.valueOf(entry[1]));
+//                entity.setChinaGDP(Long.valueOf(entry[2]));
+//                entity.setUsaGDP(Long.valueOf(entry[3]));
+            }
+
+
+            System.out.println(myEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        macroEconomicViewModel.findAnnualGDPs(2014, 2020);
+//        Long[][] hardcodedSeedData = {
+//                {37029L, 597164L, 5433000L},
+//                {3702980L, 597160L, 543300L},
+//                {3702098L, 59716L, 543300L},
+//                {370298L, 597016L, 543000L},
+//                {3702098L, 590716L, 53300L},
+//                {370298L, 597106L, 54300L},
+//                {370298L, 597016L, 53300L},
+//        };
+//
+//        int year = 2014;
+//        for (Long[] seed : hardcodedSeedData) {
+//            AnnualGDPEntity entity = new AnnualGDPEntity();
+//            entity.setYear(year++);
+//            entity.setIndiaGDP(seed[0]);
+//            entity.setChinaGDP(seed[1]);
+//            entity.setUsaGDP(seed[2]);
+//
+//            macroEconomicViewModel.insertGDPs(entity);
+//        }
+
+        macroEconomicViewModel.findAnnualGDPs(1960, 2020);
 
 //        try {
 ////            AssetFileDescriptor descriptor = getContext().getAssets().open("annualgdptable.csv");

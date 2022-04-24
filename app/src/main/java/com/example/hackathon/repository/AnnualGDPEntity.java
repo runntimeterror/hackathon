@@ -19,6 +19,13 @@ public class AnnualGDPEntity {
     @ColumnInfo(name="usa")
     private Long usaGDP;
 
+    public AnnualGDPEntity(Integer year, Long indiaGDP, Long chinaGDP, Long usaGDP) {
+        this.year = year;
+        this.indiaGDP = indiaGDP;
+        this.chinaGDP = chinaGDP;
+        this.usaGDP = usaGDP;
+    }
+
     public Integer getYear() {
         return year;
     }
