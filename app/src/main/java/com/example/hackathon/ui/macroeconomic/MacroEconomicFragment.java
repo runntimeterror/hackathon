@@ -1,28 +1,18 @@
 package com.example.hackathon.ui.macroeconomic;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentMacroeconomicBinding;
-import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.ui.TestingRepoViewModel;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
 
 public class MacroEconomicFragment extends Fragment {
 
