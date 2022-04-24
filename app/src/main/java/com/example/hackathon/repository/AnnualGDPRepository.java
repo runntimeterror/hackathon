@@ -50,7 +50,7 @@ public class AnnualGDPRepository {
                 hardcodedSecondGraph.add(hardcoded);
             }
 
-            aggregatedData.put("meg1", hardcodedSecondGraph);
+            aggregatedData.put("MEG1", hardcodedSecondGraph);
             searchResults.setValue(aggregatedData);
         }
     };
@@ -62,7 +62,7 @@ public class AnnualGDPRepository {
             results = annualGDPDao.findAnnualGDP(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
-            String graphType = "meg2";
+            String graphType = "MEG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
             msg.setTarget(handler);
