@@ -64,9 +64,6 @@ public class MacroEconomicGraphFragment extends Fragment {
                 new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
                     @Override
                     public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
-                        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL",
-                                "MacroEconomicFragment:searchResults.observer.onChanged Length:" + gdps.get("MEG2").size());
-
                         AnyChartView anyChartView = (AnyChartView) root.findViewById(R.id.any_chart_view);
                         anyChartView.setProgressBar((ProgressBar) root.findViewById(R.id.progressBar));
 
@@ -169,38 +166,7 @@ public class MacroEconomicGraphFragment extends Fragment {
 
         macroEconomicViewModel.findAnnualGDPs(1960, 2020);
 
-//        try {
-////            AssetFileDescriptor descriptor = getContext().getAssets().open("annualgdptable.csv");
-////            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", descriptor.getFileDescriptor().toString());
-////            InputStream file = getContext().getAssets().open("images/names.txt");
-//
-//            FileReader file = new FileReader("annualgdptable.csv");
-////            BufferedReader buffer = new BufferedReader(new InputStreamReader(file));
-//            BufferedReader buffer = new BufferedReader(file);
-//            String line = "";
-////            String tableName ="annualgdps";
-////            String columns = "year, india, china, usa";
-////            String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-////            String str2 = ");";
-//
-////            db.beginTransaction();
-//            while ((line = buffer.readLine()) != null) {
-////                StringBuilder sb = new StringBuilder(str1);
-//                String[] str = line.split(",");
-//                AnnualGDPEntity entity = new AnnualGDPEntity();
-//                entity.setYear(Integer.valueOf(str[0]));
-//                entity.setIndiaGDP(long.valueOf(str[1]));
-//                entity.setChinaGDP(long.valueOf(str[2]));
-//                entity.setUsaGDP(long.valueOf(str[3]));
-//                testingRepoViewModel.insertGDPs(entity);
-//            }
-////            db.setTransactionSuccessful();
-////            db.endTransaction();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
         return root;
     }
 
