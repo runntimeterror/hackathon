@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentMacroeconomicBinding;
-import com.example.hackathon.ui.debt.DebtDataSearchFragment;
 
 public class MacroEconomicFragment extends Fragment {
 
@@ -27,14 +25,12 @@ public class MacroEconomicFragment extends Fragment {
         binding = FragmentMacroeconomicBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        macroEconomicViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Fragment childFragment = new DebtDataSearchFragment();
+        Fragment childFragment = new MacroEconomicDataSearchFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.macroeconomic_child_fragment_container, childFragment).commit();
     }
