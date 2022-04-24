@@ -103,7 +103,7 @@ public class MacroEconomicsEntity {
         for (Field field : ((Object) this).getClass().getDeclaredFields()) {
             if(field.isAnnotationPresent(Annotation.class)) {
                 Annotation annotation = field.getAnnotation(Annotation.class);
-                if (annotation.value() == key) {
+                if (annotation.value().equals(key)) {
                     try {
                         return (Long) field.get(this);
                     } catch (IllegalAccessException e) {
@@ -114,7 +114,7 @@ public class MacroEconomicsEntity {
 
         }
 
-        return 100L;
+        return 0L;
     }
 
     public void setYear(Integer year) {
