@@ -1,4 +1,4 @@
-package com.example.hackathon.repository.aggriculture;
+package com.example.hackathon.repository.debt;
 
 import android.app.Application;
 import android.os.Handler;
@@ -8,31 +8,31 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.AppRoomDatabase;
-import com.example.hackathon.repository.CurrentAccountBalanceDao;
-import com.example.hackathon.repository.CurrentAccountBalanceEntity;
-import com.example.hackathon.repository.debt.DebtServiceDao;
+import com.example.hackathon.repository.aggriculture.FertilizerDao;
+import com.example.hackathon.repository.aggriculture.FertilizerEntity;
+import com.example.hackathon.repository.aggriculture.ValueAddDao;
+import com.example.hackathon.repository.aggriculture.ValueAddEntity;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AggricultureRepository {
-    private final ValueAddDao valueAddDao;
-    private final FertilizerDao fertilizerDao;
-//    private CurrentAccountBalanceDao currentAccountBalanceDao;
+public class DebtRepository {
+    private final DebtServiceDao debtServiceDao;
+    private final TotalReservesDao totalReservesDao;
+    //    private CurrentAccountBalanceDao currentAccountBalanceDao;
     //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
-    private final MutableLiveData<HashMap<String, List<ValueAddEntity>>> searchResults = new MutableLiveData<>();
-    private List<ValueAddEntity> results;
-    private HashMap<String, List<ValueAddEntity>> aggregatedData = new HashMap<>();
+    private final MutableLiveData<HashMap<String, List<DebtServiceEntity>>> searchResults = new MutableLiveData<>();
+    private List<DebtServiceEntity> results;
+    private HashMap<String, List<DebtServiceEntity>> aggregatedData = new HashMap<>();
 
-    public AggricultureRepository(Application application) {
+    public DebtRepository(Application application) {
         AppRoomDatabase db;
         db = AppRoomDatabase.getDatabase(application);
-        valueAddDao = db.valueAddDao();
-        fertilizerDao = db.fertilizerDao();
+        debtServiceDao = db.debtServiceDao();
+        totalReservesDao = db.totalReservesDao();
 //        currentAccountBalanceDao = db.currentAccountBalanceDao();
     }
 
@@ -46,11 +46,11 @@ public class AggricultureRepository {
         }
     };
 
-    public void findValueAdd(int startYear, int endYear) {
+    public void findDebtService(int startYear, int endYear) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = valueAddDao.findValueAdd(startYear, endYear);
+            results = debtServiceDao.findDebtService(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
             String graphType = "MEG2";
             Message msg = Message.obtain();
@@ -61,37 +61,37 @@ public class AggricultureRepository {
         executor.shutdown();
     }
 
-    public void insertValueAdd(ValueAddEntity annualGDPEntity) {
+    public void insertDebtService(DebtServiceEntity debtServiceEntity) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
-            valueAddDao.insertValueAdd(annualGDPEntity);
+            debtServiceDao.insertDebtService(debtServiceEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });
         executor.shutdown();
     }
 
-    public void findFertilizer(int startYear, int endYear) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.submit(() -> {
-            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = fertilizerDao.findFertilizer(startYear, endYear);
-            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            String graphType = "MEG2";
-            Message msg = Message.obtain();
-            msg.obj = graphType;
-            msg.setTarget(handler);
-            msg.sendToTarget();
-        });
-        executor.shutdown();
-    }
+//    public void findTotalService(int startYear, int endYear) {
+//        ExecutorService executor = Executors.newSingleThreadExecutor();
+//        executor.submit(() -> {
+//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
+//            results = totalReservesDao.findTotalReserves(startYear, endYear);
+//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
+//            String graphType = "MEG2";
+//            Message msg = Message.obtain();
+//            msg.obj = graphType;
+//            msg.setTarget(handler);
+//            msg.sendToTarget();
+//        });
+//        executor.shutdown();
+//    }
 
-    public void insertFertilizer(FertilizerEntity fertilizerEntity) {
+    public void insertTotalReserves(TotalReservesEntity totalReservesEntity) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
-            fertilizerDao.insertFertilizer(fertilizerEntity);
+            totalReservesDao.insertTotalReserves(totalReservesEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });
@@ -114,8 +114,7 @@ public class AggricultureRepository {
 //        return searchResults;
 //    }
 
-    public MutableLiveData<HashMap<String, List<ValueAddEntity>>> getSearchResults(){
+    public MutableLiveData<HashMap<String, List<DebtServiceEntity>>> getSearchResults(){
         return searchResults;
     }
-
 }

@@ -11,10 +11,14 @@ import com.example.hackathon.repository.aggriculture.FertilizerDao;
 import com.example.hackathon.repository.aggriculture.FertilizerEntity;
 import com.example.hackathon.repository.aggriculture.ValueAddDao;
 import com.example.hackathon.repository.aggriculture.ValueAddEntity;
+import com.example.hackathon.repository.debt.DebtServiceDao;
+import com.example.hackathon.repository.debt.DebtServiceEntity;
+import com.example.hackathon.repository.debt.TotalReservesDao;
+import com.example.hackathon.repository.debt.TotalReservesEntity;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {AnnualGDPEntity.class, CurrentAccountBalanceEntity.class, ValueAddEntity.class, FertilizerEntity.class}, version = 1)
+@Database(entities = {AnnualGDPEntity.class, CurrentAccountBalanceEntity.class, ValueAddEntity.class, FertilizerEntity.class, DebtServiceEntity.class, TotalReservesEntity.class}, version = 1)
 public abstract class AppRoomDatabase extends RoomDatabase {
     /** TODO: Put file into emulated local storage
      *      Get file from local storage
@@ -28,6 +32,8 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract CurrentAccountBalanceDao currentAccountBalanceDao();
     public abstract ValueAddDao valueAddDao();
     public abstract FertilizerDao fertilizerDao();
+    public abstract DebtServiceDao debtServiceDao();
+    public abstract TotalReservesDao totalReservesDao();
     private static AppRoomDatabase INSTANCE;
 
     public static AppRoomDatabase getDatabase(final Context context) {
