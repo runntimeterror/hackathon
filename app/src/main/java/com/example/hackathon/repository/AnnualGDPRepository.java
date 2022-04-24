@@ -48,7 +48,7 @@ public class AnnualGDPRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             results = annualGDPDao.findAnnualGDP(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            String graphType = "MEG1";
+            String graphType = "MEG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
             msg.setTarget(handler);
