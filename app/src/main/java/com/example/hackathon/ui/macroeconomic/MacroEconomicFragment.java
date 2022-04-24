@@ -15,11 +15,7 @@ import com.example.hackathon.databinding.FragmentMacroeconomicBinding;
 import com.example.hackathon.ui.TestingRepoViewModel;
 
 public class MacroEconomicFragment extends Fragment {
-
     private FragmentMacroeconomicBinding binding;
-
-    private TestingRepoViewModel testingRepoViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MacroEconomicViewModel macroEconomicViewModel =
