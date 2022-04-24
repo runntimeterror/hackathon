@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hackathon.state.Persona;
 
 public class PersonaActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class PersonaActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void switchToMainActivity(View view){
         Intent intent = new Intent(PersonaActivity.this, MainActivity.class);
