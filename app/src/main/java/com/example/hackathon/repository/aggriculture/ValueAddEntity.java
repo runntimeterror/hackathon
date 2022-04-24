@@ -1,29 +1,29 @@
-package com.example.hackathon.repository;
+package com.example.hackathon.repository.aggriculture;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName="aggriculturalcontribution")
-public class AggriculturalContributionEntity {
+@Entity(tableName = "valueadd")
+public class ValueAddEntity {
     @PrimaryKey
     @ColumnInfo(name="year")
     private Integer year;
 
     @ColumnInfo(name="india")
-    private Float india;
+    private Float indiaGDP;
 
     @ColumnInfo(name="china")
-    private Float china;
+    private Float chinaGDP;
 
     @ColumnInfo(name="usa")
-    private Float usa;
+    private Float usaGDP;
 
-    public AggriculturalContributionEntity(Integer year, Float indiaGDP, Float chinaGDP, Float usaGDP) {
+    public ValueAddEntity(Integer year, Float indiaGDP, Float chinaGDP, Float usaGDP) {
         this.year = year;
-        this.india = indiaGDP;
-        this.china = chinaGDP;
-        this.usa = usaGDP;
+        this.indiaGDP = indiaGDP;
+        this.chinaGDP = chinaGDP;
+        this.usaGDP = usaGDP;
     }
 
     public Integer getYear() {
@@ -31,15 +31,15 @@ public class AggriculturalContributionEntity {
     }
 
     public Float getIndiaGDP() {
-        return india;
+        return indiaGDP;
     }
 
     public Float getChinaGDP() {
-        return china;
+        return chinaGDP;
     }
 
     public Float getUsaGDP() {
-        return usa;
+        return usaGDP;
     }
 
     public void setYear(Integer year) {
@@ -47,14 +47,14 @@ public class AggriculturalContributionEntity {
     }
 
     public void setIndiaGDP(Float indiaGDP) {
-        this.india = indiaGDP;
+        this.indiaGDP = indiaGDP;
     }
 
     public void setChinaGDP(Float chinaGDP) {
-        this.china = chinaGDP;
+        this.chinaGDP = chinaGDP;
     }
 
     public void setUsaGDP(Float usaGDP) {
-        this.usa = usaGDP;
+        this.usaGDP = usaGDP;
     }
 }

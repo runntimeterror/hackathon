@@ -1,4 +1,4 @@
-package com.example.hackathon.repository;
+package com.example.hackathon.repository.aggriculture;
 
 import android.app.Application;
 import android.os.Handler;
@@ -8,45 +8,37 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.hackathon.repository.AnnualGDPEntity;
+import com.example.hackathon.repository.AppRoomDatabase;
+import com.example.hackathon.repository.CurrentAccountBalanceDao;
+import com.example.hackathon.repository.CurrentAccountBalanceEntity;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AggriculturalContributionRepository {
-    private final AggriculturalContributionDao dao;
+public class AggricultureRepository {
+    private ValueAddDao valueAddDao;
+//    private CurrentAccountBalanceDao currentAccountBalanceDao;
     //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
-    private final MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults = new MutableLiveData<>();
-    private List<AnnualGDPEntity> results;
-    private HashMap<String, List<AnnualGDPEntity>> aggregatedData = new HashMap<>();
+    private final MutableLiveData<HashMap<String, List<ValueAddEntity>>> searchResults = new MutableLiveData<>();
+    private List<ValueAddEntity> results;
+    private HashMap<String, List<ValueAddEntity>> aggregatedData = new HashMap<>();
 
-    public AggriculturalContributionRepository(Application application) {
+    public AggricultureRepository(Application application) {
         AppRoomDatabase db;
         db = AppRoomDatabase.getDatabase(application);
-        dao = db.aggriculturalContributionDao();
+        valueAddDao = db.valueAddDao();
+//        currentAccountBalanceDao = db.currentAccountBalanceDao();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-//            Country.getInstance();
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: handler.handleMessage");
-//            searchResults.setValue(results);
             String graphType = (String) msg.obj;
             aggregatedData.put(graphType, results);
-
-            // TODO: REMOVE HARDCODED SECOND GRAPH
-//            List<AnnualGDPEntity> hardcodedSecondGraph = new ArrayList<>();
-//            for (AnnualGDPEntity gdpEntity : results) {
-//                AnnualGDPEntity hardcoded = new AnnualGDPEntity();
-//                hardcoded.setYear(gdpEntity.getYear());
-//                hardcoded.setIndiaGDP(gdpEntity.getChinaGDP());
-//                hardcoded.setChinaGDP(gdpEntity.getUsaGDP());
-//                hardcoded.setUsaGDP(gdpEntity.getIndiaGDP());
-//                hardcodedSecondGraph.add(hardcoded);
-//            }
-//
-//            aggregatedData.put("MEG1", hardcodedSecondGraph);
             searchResults.setValue(aggregatedData);
         }
     };
@@ -55,9 +47,8 @@ public class AggriculturalContributionRepository {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = dao.findAnnualGDP(startYear, endYear);
+            results = valueAddDao.findValueAdd(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-//            handler.sendEmptyMessage(0);
             String graphType = "MEG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
@@ -67,23 +58,34 @@ public class AggriculturalContributionRepository {
         executor.shutdown();
     }
 
-    public void insertAnnualGDPs(AnnualGDPEntity annualGDPEntity) {
+    public void insertValueAdd(ValueAddEntity annualGDPEntity) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
-            dao.insertAnnualGDP(annualGDPEntity);
+            valueAddDao.insertValueAdd(annualGDPEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });
         executor.shutdown();
     }
 
+//    public void insertCurrentAccountBalances(CurrentAccountBalanceEntity currentAccountBalanceEntity) {
+//        ExecutorService executor = Executors.newSingleThreadExecutor();
+//        executor.submit(() -> {
+//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
+//            value.insertCurrentAccountBalance(currentAccountBalanceEntity);
+//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
+////            handler.sendEmptyMessage(0);
+//        });
+//        executor.shutdown();
+//    }
+
 //    public MutableLiveData<List<AnnualGDPEntity>> getSearchResults() {
 //        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: getSearchResults");
 //        return searchResults;
 //    }
 
-    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults(){
+    public MutableLiveData<HashMap<String, List<ValueAddEntity>>> getSearchResults(){
         return searchResults;
     }
 

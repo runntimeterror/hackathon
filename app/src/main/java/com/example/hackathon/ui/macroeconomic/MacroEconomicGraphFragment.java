@@ -34,6 +34,7 @@ import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.hatchfill.HatchFillType;
 import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
+import com.example.hackathon.repository.CurrentAccountBalanceEntity;
 import com.example.hackathon.state.Country;
 import com.example.hackathon.ui.debt.DebtGraphFragment;
 import com.opencsv.CSVReader;
@@ -88,7 +89,7 @@ public class MacroEconomicGraphFragment extends Fragment {
                 StrictMode.setThreadPolicy(policy);
             }
 
-            InputStream input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/annualgdptable.csv").openStream();
+            InputStream input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/growth2.csv").openStream();
             Reader reader1 = new InputStreamReader(input, "UTF-8");
 //            CSVReader reader = new CSVReader(reader1);
             CSVReader reader = new CSVReaderBuilder(reader1).withSkipLines(1).build();
@@ -97,9 +98,9 @@ public class MacroEconomicGraphFragment extends Fragment {
             for (String[] entry : myEntries) {
                 AnnualGDPEntity entity = new AnnualGDPEntity(
                         Integer.valueOf(entry[0]),
-                        new BigDecimal(entry[1]).longValue(),
-                        new BigDecimal(entry[2]).longValue(),
-                        new BigDecimal(entry[3]).longValue()
+                        new BigDecimal(entry[1]).floatValue(),
+                        new BigDecimal(entry[2]).floatValue(),
+                        new BigDecimal(entry[3]).floatValue()
                 );
 
                 macroEconomicViewModel.insertGDPs(entity);
@@ -112,6 +113,32 @@ public class MacroEconomicGraphFragment extends Fragment {
 //                entity.setChinaGDP(Long.valueOf(entry[2]));
 //                entity.setUsaGDP(Long.valueOf(entry[3]));
             }
+
+            input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/gdp3.csv").openStream();
+            reader1 = new InputStreamReader(input, "UTF-8");
+//            CSVReader reader = new CSVReader(reader1);
+            reader = new CSVReaderBuilder(reader1).withSkipLines(1).build();
+            myEntries = reader.readAll();
+
+            for (String[] entry : myEntries) {
+                CurrentAccountBalanceEntity entity = new CurrentAccountBalanceEntity(
+                        Integer.valueOf(entry[0]),
+                        new BigDecimal(entry[1]).floatValue(),
+                        new BigDecimal(entry[2]).floatValue(),
+                        new BigDecimal(entry[3]).floatValue()
+                );
+
+                macroEconomicViewModel.insertCurrentAccountBalances(entity);
+
+//                entity.setYear(Integer.valueOf(entry[0]));
+//                entity.setIndiaGrowthRate(Float.valueOf(entry[1]));
+//                entity.setChinaGrowthRate(Float.valueOf(entry[2]));
+//                entity.setUsaGrowthRate(Float.valueOf(entry[3]));
+//                entity.setIndiaGDP(Long.valueOf(entry[1]));
+//                entity.setChinaGDP(Long.valueOf(entry[2]));
+//                entity.setUsaGDP(Long.valueOf(entry[3]));
+            }
+
 
 
             System.out.println(myEntries);
@@ -505,13 +532,13 @@ public class MacroEconomicGraphFragment extends Fragment {
 
     private class GraphValues {
         private Integer year;
-        private long value;
+        private Float value;
 
         public Integer getYear() {
             return year;
         }
 
-        public long getValue() {
+        public Float getValue() {
             return value;
         }
 
@@ -519,237 +546,237 @@ public class MacroEconomicGraphFragment extends Fragment {
             this.year = year;
         }
 
-        public void setValue(long value) {
+        public void setValue(Float value) {
             this.value = value;
         }
 
         public GraphValues() {
         }
 
-        public GraphValues(Integer year, long value) {
+        public GraphValues(Integer year, Float value) {
             this.year = year;
             this.value = value;
         }
     }
 
-    private HashMap<String, List<GraphValues>> getRawData() {
-        HashMap<String, List<GraphValues>> rawData = new HashMap<String, List<GraphValues>>();
-        rawData.put("graph1", dummyDataGet1());
-        rawData.put("graph2", dummyDataGet2());
-        rawData.put("graph3", dummyDataGet3());
-        rawData.put("graph4", dummyDataGet4());
-        rawData.put("graph5", dummyDataGet5());
-        return rawData;
-    }
+//    private HashMap<String, List<GraphValues>> getRawData() {
+//        HashMap<String, List<GraphValues>> rawData = new HashMap<String, List<GraphValues>>();
+//        rawData.put("graph1", dummyDataGet1());
+//        rawData.put("graph2", dummyDataGet2());
+//        rawData.put("graph3", dummyDataGet3());
+//        rawData.put("graph4", dummyDataGet4());
+//        rawData.put("graph5", dummyDataGet5());
+//        return rawData;
+//    }
 
-    private List<GraphValues> dummyDataGet1() {
-        List<GraphValues> list1 = new ArrayList<>();
+//    private List<GraphValues> dummyDataGet1() {
+//        List<GraphValues> list1 = new ArrayList<>();
 
 
-        list1.add(new GraphValues(1986, 101 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1987, 102 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1988, 103));
-        list1.add(new GraphValues(1989, 104));
-        list1.add(new GraphValues(1990, 105));
-        list1.add(new GraphValues(1991, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1992, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1993, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1994, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1995, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1996, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1997, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1998, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1999, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2001, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2002, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2003, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2004, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2005, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2006, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2007, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2008, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2009, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2010, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2011, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2012, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2013, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2014, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2015, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2016, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2017, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2018, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2019, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2020, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2021, 100 + (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2022, 100 + (long) (Math.random() * range) + min));
-        return list1;
-    }
-
-    private List<GraphValues> dummyDataGet2() {
-        List<GraphValues> list1 = new ArrayList<>();
-
-        list1.add(new GraphValues(1986, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
-        return list1;
-    }
-
-    private List<GraphValues> dummyDataGet3() {
-        List<GraphValues> list1 = new ArrayList<>();
-
-        list1.add(new GraphValues(1986, (long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
-        return list1;
-    }
-
-    private List<GraphValues> dummyDataGet4() {
-        List<GraphValues> list1 = new ArrayList<>();
-
-        list1.add(new GraphValues(1986, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
-        return list1;
-    }
-
-    private List<GraphValues> dummyDataGet5() {
-        List<GraphValues> list1 = new ArrayList<>();
-
-        list1.add(new GraphValues(1986, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
-        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
-        return list1;
-    }
+//        list1.add(new GraphValues(1986, 101 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1987, 102 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1988, 103));
+//        list1.add(new GraphValues(1989, 104));
+//        list1.add(new GraphValues(1990, 105));
+//        list1.add(new GraphValues(1991, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1992, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1993, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1994, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1995, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1996, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1997, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1998, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1999, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2001, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2002, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2003, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2004, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2005, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2006, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2007, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2008, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2009, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2010, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2011, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2012, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2013, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2014, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2015, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2016, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2017, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2018, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2019, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2020, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2021, 100 + (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2022, 100 + (long) (Math.random() * range) + min));
+//        return list1;
+//    }
+//
+//    private List<GraphValues> dummyDataGet2() {
+//        List<GraphValues> list1 = new ArrayList<>();
+//
+//        list1.add(new GraphValues(1986, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
+//        return list1;
+//    }
+//
+//    private List<GraphValues> dummyDataGet3() {
+//        List<GraphValues> list1 = new ArrayList<>();
+//
+//        list1.add(new GraphValues(1986, (long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
+//        return list1;
+//    }
+//
+//    private List<GraphValues> dummyDataGet4() {
+//        List<GraphValues> list1 = new ArrayList<>();
+//
+//        list1.add(new GraphValues(1986, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
+//        return list1;
+//    }
+//
+//    private List<GraphValues> dummyDataGet5() {
+//        List<GraphValues> list1 = new ArrayList<>();
+//
+//        list1.add(new GraphValues(1986, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1987, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1988, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1989, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1990, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1991, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1992, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1993, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1994, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1995, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1996, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1997, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1998, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(1999, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2001, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2003, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2002, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2004, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2005, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2006, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2007, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2008, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2009, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2010, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2011, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2012, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2013, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2014, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2015, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2016, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2017, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2018, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2019, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2020, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2021, +(long) (Math.random() * range) + min));
+//        list1.add(new GraphValues(2022, +(long) (Math.random() * range) + min));
+//        return list1;
+//    }
 }

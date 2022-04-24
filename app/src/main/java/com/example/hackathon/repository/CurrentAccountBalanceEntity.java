@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName="annualgdps")
-public class AnnualGDPEntity implements IMacroEconEntity {
+@Entity(tableName="currentaccountbalance")
+public class CurrentAccountBalanceEntity implements IMacroEconEntity {
     @PrimaryKey
     @ColumnInfo(name="year")
     private Integer year;
@@ -19,7 +19,7 @@ public class AnnualGDPEntity implements IMacroEconEntity {
     @ColumnInfo(name="usa")
     private Float usaGDP;
 
-    public AnnualGDPEntity(Integer year, Float indiaGDP, Float chinaGDP, Float usaGDP) {
+    public CurrentAccountBalanceEntity(Integer year, Float indiaGDP, Float chinaGDP, Float usaGDP) {
         this.year = year;
         this.indiaGDP = indiaGDP;
         this.chinaGDP = chinaGDP;

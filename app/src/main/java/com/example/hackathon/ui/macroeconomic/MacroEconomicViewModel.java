@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.AnnualGDPRepository;
+import com.example.hackathon.repository.CurrentAccountBalanceEntity;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class MacroEconomicViewModel extends AndroidViewModel {
     private AnnualGDPRepository annualGDPRepository;
+//    private AnnualGDPRepository annualGDPRepository;
     private MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults;
     private final MutableLiveData<String> mText = new MutableLiveData<>();
     private ArrayList<String> checkedGraphs;
@@ -56,5 +58,9 @@ public class MacroEconomicViewModel extends AndroidViewModel {
 
     public void insertGDPs(AnnualGDPEntity annualGDPEntity) {
         annualGDPRepository.insertAnnualGDPs(annualGDPEntity);
+    }
+
+    public void insertCurrentAccountBalances(CurrentAccountBalanceEntity currentAccountBalanceEntity) {
+        annualGDPRepository.insertCurrentAccountBalances(currentAccountBalanceEntity);
     }
 }

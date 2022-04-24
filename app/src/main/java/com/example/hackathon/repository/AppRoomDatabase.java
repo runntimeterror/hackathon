@@ -7,9 +7,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.hackathon.repository.aggriculture.FertilizerEntity;
+import com.example.hackathon.repository.aggriculture.ValueAddDao;
+import com.example.hackathon.repository.aggriculture.ValueAddEntity;
+
 import java.util.concurrent.Executors;
 
-@Database(entities = {AnnualGDPEntity.class}, version = 1)
+@Database(entities = {AnnualGDPEntity.class, CurrentAccountBalanceEntity.class, ValueAddEntity.class, FertilizerEntity.class}, version = 1)
 public abstract class AppRoomDatabase extends RoomDatabase {
     /** TODO: Put file into emulated local storage
      *      Get file from local storage
@@ -20,9 +24,11 @@ public abstract class AppRoomDatabase extends RoomDatabase {
      */
 
     public abstract AnnualGDPDao annualGDPDao();
+    public abstract CurrentAccountBalanceDao currentAccountBalanceDao();
+    public abstract ValueAddDao valueAddDao();
     private static AppRoomDatabase INSTANCE;
 
-    static AppRoomDatabase getDatabase(final Context context) {
+    public static AppRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppRoomDatabase.class) {
                 if (INSTANCE == null) {

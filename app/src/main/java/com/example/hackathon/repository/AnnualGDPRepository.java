@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 
 public class AnnualGDPRepository {
     private final AnnualGDPDao annualGDPDao;
+    private final CurrentAccountBalanceDao currentAccountBalanceDao;
 //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
     private final MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults = new MutableLiveData<>();
     private List<AnnualGDPEntity> results;
@@ -28,29 +29,15 @@ public class AnnualGDPRepository {
         AppRoomDatabase db;
         db = AppRoomDatabase.getDatabase(application);
         annualGDPDao = db.annualGDPDao();
+        currentAccountBalanceDao = db.currentAccountBalanceDao();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-//            Country.getInstance();
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: handler.handleMessage");
-//            searchResults.setValue(results);
             String graphType = (String) msg.obj;
             aggregatedData.put(graphType, results);
-
-            // TODO: REMOVE HARDCODED SECOND GRAPH
-//            List<AnnualGDPEntity> hardcodedSecondGraph = new ArrayList<>();
-//            for (AnnualGDPEntity gdpEntity : results) {
-//                AnnualGDPEntity hardcoded = new AnnualGDPEntity();
-//                hardcoded.setYear(gdpEntity.getYear());
-//                hardcoded.setIndiaGDP(gdpEntity.getChinaGDP());
-//                hardcoded.setChinaGDP(gdpEntity.getUsaGDP());
-//                hardcoded.setUsaGDP(gdpEntity.getIndiaGDP());
-//                hardcodedSecondGraph.add(hardcoded);
-//            }
-//
-//            aggregatedData.put("MEG1", hardcodedSecondGraph);
             searchResults.setValue(aggregatedData);
         }
     };
@@ -61,7 +48,6 @@ public class AnnualGDPRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             results = annualGDPDao.findAnnualGDP(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-//            handler.sendEmptyMessage(0);
             String graphType = "MEG2";
             Message msg = Message.obtain();
             msg.obj = graphType;
@@ -76,6 +62,17 @@ public class AnnualGDPRepository {
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
             annualGDPDao.insertAnnualGDP(annualGDPEntity);
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
+//            handler.sendEmptyMessage(0);
+        });
+        executor.shutdown();
+    }
+
+    public void insertCurrentAccountBalances(CurrentAccountBalanceEntity currentAccountBalanceEntity) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
+            currentAccountBalanceDao.insertCurrentAccountBalance(currentAccountBalanceEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });
