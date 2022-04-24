@@ -4,7 +4,17 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
+
+import kotlin.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@interface Annotation {
+    public String value();
+}
+
 
 @Entity(tableName="macroeconomicstable")
 public class MacroEconomicsEntity {
@@ -12,57 +22,75 @@ public class MacroEconomicsEntity {
     @ColumnInfo(name="year")
     private Integer year;
 
+    @Annotation("MEG1INDIA")
     @ColumnInfo(name="MEG1INDIA")
     private Float indiaGrowthRate;
 
+    @Annotation("MEG1CHINA")
     @ColumnInfo(name="MEG1CHINA")
     private Float chinaGrowthRate;
 
+    @Annotation("MEG1USA")
     @ColumnInfo(name="MEG1USA")
     private Float usaGrowthRate;
 
+    @Annotation("MEG2INDIA")
     @ColumnInfo(name="MEG2INDIA")
     private Long indiaGDP;
 
+    @Annotation("MEG2CHINA")
     @ColumnInfo(name="MEG2CHINA")
     private Long chinaGDP;
 
+    @Annotation("MEG2USA")
     @ColumnInfo(name="MEG2USA")
     private Long usaGDP;
 
+    @Annotation("MEG3INDIA")
     @ColumnInfo(name="MEG3INDIA")
     private Float indiaBalancePercentOfGDP;
 
+    @Annotation("MEG3CHINA")
     @ColumnInfo(name="MEG3CHINA")
     private Float chinaBalancePercentOfGDP;
 
+    @Annotation("MEG3USA")
     @ColumnInfo(name="MEG3USA")
     private Float usaBalancePercentOfGDP;
 
+    @Annotation("MEG4INDIA")
     @ColumnInfo(name="MEG4INDIA")
     private Long indiaForeignDirectInvestment;
 
+    @Annotation("MEG4CHINA")
     @ColumnInfo(name="MEG4CHINA")
     private Long chinaForeignDirectInvestment;
 
+    @Annotation("MEG4USA")
     @ColumnInfo(name="MEG4USA")
     private Long usaForeignDirectInvestment;
 
+    @Annotation("MEG5INDIA")
     @ColumnInfo(name="MEG5INDIA")
     private Float indiaForeignDirectInvestmentNetInflows;
 
+    @Annotation("MEG5CHINA")
     @ColumnInfo(name="MEG5CHINA")
     private Float chinaForeignDirectInvestmentNetInflows;
 
+    @Annotation("MEG5USA")
     @ColumnInfo(name="MEG5USA")
     private Float usaForeignDirectInvestmentNetInflows;
 
+    @Annotation("MEG6INDIA")
     @ColumnInfo(name="MEG6INDIA")
     private Float indiaNetOutflows;
 
+    @Annotation("MEG6CHINA")
     @ColumnInfo(name="MEG6CHINA")
     private Float chinaNetOutflows;
 
+    @Annotation("MEG6USA")
     @ColumnInfo(name="MEG6USA")
     private Float usaNetOutflows;
 
@@ -73,14 +101,17 @@ public class MacroEconomicsEntity {
     public Long getValue(String countryCode, String graphCode) {
         String key = graphCode + countryCode;
         for (Field field : ((Object) this).getClass().getDeclaredFields()) {
-            String annotation = field.getAnnotation(ColumnInfo.class).toString();
-            if (annotation == key) {
-                try {
-                    return (Long) field.get(this);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+            if(field.isAnnotationPresent(Annotation.class)) {
+                Annotation annotation = field.getAnnotation(Annotation.class);
+                if (annotation.value() == key) {
+                    try {
+                        return (Long) field.get(this);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+
         }
 
         return 100L;
