@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.stream.Collectors;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -44,7 +46,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MacroEconomicGraphFragment extends Fragment {
-//    private TestingRepoViewModel testingRepoViewModel;
+    //    private TestingRepoViewModel testingRepoViewModel;
     // TODO :REMOVE
     int max = 100;
     int min = 1;
@@ -53,10 +55,10 @@ public class MacroEconomicGraphFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       View root =  inflater.inflate(R.layout.fragment_macroeconomic_graph, container, false);
-       MacroEconomicViewModel macroEconomicViewModel = ((MacroEconomicFragment) getParentFragment()).getMacroEconomicViewModel();
+        View root = inflater.inflate(R.layout.fragment_macroeconomic_graph, container, false);
+        MacroEconomicViewModel macroEconomicViewModel = ((MacroEconomicFragment) getParentFragment()).getMacroEconomicViewModel();
 //        testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
-       macroEconomicViewModel.getSearchResults().observe(
+        macroEconomicViewModel.getSearchResults().observe(
                 getViewLifecycleOwner(),
                 new Observer<HashMap<String, List<MacroEconomicsEntity>>>() {
                     @Override
@@ -88,7 +90,7 @@ public class MacroEconomicGraphFragment extends Fragment {
                 StrictMode.setThreadPolicy(policy);
             }
 
-            InputStream input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/annualgdptable.csv").openStream();
+            InputStream input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/macroeconomics2.csv").openStream();
             Reader reader1 = new InputStreamReader(input, "UTF-8");
 //            CSVReader reader = new CSVReader(reader1);
             CSVReader reader = new CSVReaderBuilder(reader1).withSkipLines(1).build();
@@ -97,25 +99,25 @@ public class MacroEconomicGraphFragment extends Fragment {
             for (String[] entry : myEntries) {
                 MacroEconomicsEntity entity = new MacroEconomicsEntity(
                         Integer.valueOf(entry[0]),
-                        Float.valueOf(entry[1]),
-                        Float.valueOf(entry[2]),
-                        Float.valueOf(entry[3]),
-                        Long.valueOf(entry[4]),
-                        Long.valueOf(entry[5]),
-                        Long.valueOf(entry[6]),
-                        Float.valueOf(entry[7]),
-                        Float.valueOf(entry[8]),
-                        Float.valueOf(entry[9]),
-                        Long.valueOf(entry[10]),
-                        Long.valueOf(entry[11]),
-                        Long.valueOf(entry[12]),
-                        Float.valueOf(entry[13]),
-                        Float.valueOf(entry[14]),
-                        Float.valueOf(entry[15]),
-                        Float.valueOf(entry[16]),
-                        Float.valueOf(entry[17]),
-                        Float.valueOf(entry[18])
-                    );
+                         new BigDecimal(entry[1]).floatValue(),
+                         new BigDecimal(entry[2]).floatValue(),
+                         new BigDecimal(entry[3]).floatValue(),
+                        new BigDecimal(entry[4]).longValue(),
+                        new BigDecimal(entry[5]).longValue(),
+                        new BigDecimal(entry[6]).longValue(),
+                         new BigDecimal(entry[7]).floatValue(),
+                         new BigDecimal(entry[8]).floatValue(),
+                         new BigDecimal(entry[9]).floatValue(),
+                        new BigDecimal(entry[10]).longValue(),
+                        new BigDecimal(entry[11]).longValue(),
+                        new BigDecimal(entry[12]).longValue(),
+                         new BigDecimal(entry[13]).floatValue(),
+                         new BigDecimal(entry[14]).floatValue(),
+                         new BigDecimal(entry[15]).floatValue(),
+                         new BigDecimal(entry[16]).floatValue(),
+                         new BigDecimal(entry[17]).floatValue(),
+                         new BigDecimal(entry[18]).floatValue()
+                );
 
                 macroEconomicViewModel.insertGDPs(entity);
 
@@ -155,7 +157,7 @@ public class MacroEconomicGraphFragment extends Fragment {
 //            macroEconomicViewModel.insertGDPs(entity);
 //        }
 //
-//        macroEconomicViewModel.findAnnualGDPs(2014, 2020);
+
 
 //        try {
 ////            AssetFileDescriptor descriptor = getContext().getAssets().open("annualgdptable.csv");
@@ -189,10 +191,11 @@ public class MacroEconomicGraphFragment extends Fragment {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        macroEconomicViewModel.findAnnualGDPs(2014, 2020);
         return root;
     }
 
-    private Map<String, List<GraphValues>> TransaformData(HashMap<String, List<MacroEconomicsEntity>> rawdata , ArrayList<String> graphs){
+    private Map<String, List<GraphValues>> TransaformData(HashMap<String, List<MacroEconomicsEntity>> rawdata, ArrayList<String> graphs) {
         String country = Country.getInstance().getSelectedCountry();
 
         // get only those values which are selected
@@ -202,8 +205,8 @@ public class MacroEconomicGraphFragment extends Fragment {
 
         Map<String, List<GraphValues>> transformedData = new HashMap<>();
 
-        deptMap2.forEach((k,v) ->{
-        long val;
+        deptMap2.forEach((k, v) -> {
+            long val;
             List<GraphValues> employees = v.stream()
                     .map(p -> {
                         GraphValues g = new GraphValues();
@@ -220,15 +223,16 @@ public class MacroEconomicGraphFragment extends Fragment {
 //                                g.setValue( p.getChinaGDP());
 //                                break;
 //                        }
-                        return  g;
+                        return g;
                     })
                     .collect(Collectors.toList());
 
             transformedData.put(k, employees);
-            });
+        });
 
         return transformedData;
     }
+
     private Cartesian3d GetGraph(HashMap<String, List<MacroEconomicsEntity>> rawData, ArrayList<String> graphs) {
         Cartesian3d area3d = AnyChart.area3d();
 
@@ -248,7 +252,7 @@ public class MacroEconomicGraphFragment extends Fragment {
 //        HashMap<String, List<GraphValues>> rawData = getRawData();
 
         //     List<DataEntry> seriesData = new ArrayList<>();
-        Map<String, List<GraphValues>> transformedData =  TransaformData(rawData, graphs);
+        Map<String, List<GraphValues>> transformedData = TransaformData(rawData, graphs);
         List<DataEntry> seriesData = setData(transformedData);
 
 //        seriesData.add(new CustomDataEntry("1986", 162, 42));
@@ -320,12 +324,12 @@ public class MacroEconomicGraphFragment extends Fragment {
             case 2:
                 series1.name(transformedData.keySet().toArray()[0].toString());
                 series2.name(transformedData.keySet().toArray()[1].toString());
-                    break;
+                break;
             case 3:
                 series1.name(transformedData.keySet().toArray()[0].toString());
                 series2.name(transformedData.keySet().toArray()[1].toString());
                 series3.name(transformedData.keySet().toArray()[2].toString());
-                 break;
+                break;
             case 4:
                 series1.name(transformedData.keySet().toArray()[0].toString());
                 series2.name(transformedData.keySet().toArray()[1].toString());
@@ -348,8 +352,6 @@ public class MacroEconomicGraphFragment extends Fragment {
                 series6.name(transformedData.keySet().toArray()[5].toString());
                 break;
         }
-
-
 
 
         area3d.tooltip()
@@ -489,12 +491,14 @@ public class MacroEconomicGraphFragment extends Fragment {
             setValue("value2", value2);
 
         }
+
         CustomDataEntry(String x, Number value, Number value2, Number value3) {
             super(x, value);
             setValue("value2", value2);
             setValue("value3", value3);
 
         }
+
         CustomDataEntry(String x, Number value, Number value2, Number value3, Number value4) {
             super(x, value);
             setValue("value2", value2);
@@ -502,6 +506,7 @@ public class MacroEconomicGraphFragment extends Fragment {
             setValue("value4", value4);
 
         }
+
         CustomDataEntry(String x, Number value, Number value2, Number value3, Number value4, Number value5) {
             super(x, value);
             setValue("value2", value2);
@@ -509,6 +514,7 @@ public class MacroEconomicGraphFragment extends Fragment {
             setValue("value4", value4);
             setValue("value5", value5);
         }
+
         CustomDataEntry(String x, Number value, Number value2, Number value3, Number value4, Number value5, Number value6) {
             super(x, value);
             setValue("value2", value2);

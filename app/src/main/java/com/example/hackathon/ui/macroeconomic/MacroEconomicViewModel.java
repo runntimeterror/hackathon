@@ -27,7 +27,7 @@ public class MacroEconomicViewModel extends AndroidViewModel {
         mText.setValue("This is Macro Economic fragment");
 
         macroEconomicsRepository = new MacroEconomicsRepository(application);
-        macroEconomicsRepository.findAnnualGDPs(2014, 2018);
+//        macroEconomicsRepository.findAnnualGDPs(2014, 2018);
         searchResults = macroEconomicsRepository.getSearchResults();
     }
 
