@@ -30,4 +30,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.anychart.AnyChartView>
+    <Button
+        android:id="@+id/buttonMacroGraphNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.88"
+        android:visibility="gone"
+        android:text="Add Notes"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,20 +1,17 @@
 package com.example.hackathon.ui.macroeconomic;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.util.stream.Collectors;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -36,10 +33,16 @@ import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.CurrentAccountBalanceEntity;
 import com.example.hackathon.state.Country;
-import com.example.hackathon.ui.debt.DebtGraphFragment;
+import com.example.hackathon.state.Persona;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,7 @@ public class MacroEconomicGraphFragment extends Fragment {
     int max = 100;
     int min = 1;
     int range = max - min + 1;
+    private String m_Text = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +75,41 @@ public class MacroEconomicGraphFragment extends Fragment {
                     }
                 }
         );
+
+       String userPersona = Persona.getInstance().getUserPersona();
+        if(userPersona.equals(Persona.DATA_SCIENTIST)) {
+            Button buttonMacro = root.findViewById(R.id.buttonMacroGraphNotes);
+            buttonMacro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(root.getContext());
+                    builder.setTitle("Add notes for graph");
+
+// Set up the input
+                    final EditText input = new EditText(root.getContext());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+
+// Set up the buttons
+                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            m_Text = input.getText().toString();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
+                }
+            });
+
+            buttonMacro.setVisibility(View.VISIBLE);
+        }
 
 //        binding.testQueryButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
