@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hackathon.R;
 import com.example.hackathon.databinding.FragmentMacroeconomicBinding;
-import com.example.hackathon.ui.TestingRepoViewModel;
 
 public class MacroEconomicFragment extends Fragment {
     private FragmentMacroeconomicBinding binding;
@@ -32,6 +31,17 @@ public class MacroEconomicFragment extends Fragment {
         Fragment childFragment = new MacroEconomicDataSearchFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.macroeconomic_child_fragment_container, childFragment).commit();
+    }
+
+    public void replaceFragments(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.macroeconomic_child_fragment_container, fragment).commit();
     }
 
     @Override

@@ -35,6 +35,17 @@ public class DebtFragment extends Fragment {
         transaction.replace(R.id.debt_child_fragment_container, childFragment).commit();
     }
 
+    public void replaceFragments(Class fragmentClass) {
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.debt_child_fragment_container, fragment).commit();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
