@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.hackathon.repository.AnnualGDPEntity;
-import com.example.hackathon.repository.AnnualGDPRepository;
+import com.example.hackathon.repository.MacroEconomicsEntity;
+import com.example.hackathon.repository.MacroEconomicsRepository;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MacroEconomicViewModel extends AndroidViewModel {
-    private AnnualGDPRepository annualGDPRepository;
-    private MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults;
+    private MacroEconomicsRepository macroEconomicsRepository;
+    private MutableLiveData<HashMap<String, List<MacroEconomicsEntity>>> searchResults;
     private final MutableLiveData<String> mText = new MutableLiveData<>();
     private ArrayList<String> checkedGraphs;
 
@@ -26,9 +26,9 @@ public class MacroEconomicViewModel extends AndroidViewModel {
         super(application);
         mText.setValue("This is Macro Economic fragment");
 
-        annualGDPRepository = new AnnualGDPRepository(application);
-        annualGDPRepository.findAnnualGDPs(2014, 2018);
-        searchResults = annualGDPRepository.getSearchResults();
+        macroEconomicsRepository = new MacroEconomicsRepository(application);
+        macroEconomicsRepository.findAnnualGDPs(2014, 2018);
+        searchResults = macroEconomicsRepository.getSearchResults();
     }
 
     public LiveData<String> getText() {
@@ -44,17 +44,17 @@ public class MacroEconomicViewModel extends AndroidViewModel {
     }
 
 
-    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults() {
+    public MutableLiveData<HashMap<String, List<MacroEconomicsEntity>>> getSearchResults() {
         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: getSearchResults");
         return searchResults;
     }
 
     public void findAnnualGDPs(int startYear, int endYear) {
         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: findAnnualGDP");
-        annualGDPRepository.findAnnualGDPs(startYear, endYear);
+        macroEconomicsRepository.findAnnualGDPs(startYear, endYear);
     }
 
-    public void insertGDPs(AnnualGDPEntity annualGDPEntity) {
-        annualGDPRepository.insertAnnualGDPs(annualGDPEntity);
+    public void insertGDPs(MacroEconomicsEntity macroEconomicsEntity) {
+        macroEconomicsRepository.insertAnnualGDPs(macroEconomicsEntity);
     }
 }

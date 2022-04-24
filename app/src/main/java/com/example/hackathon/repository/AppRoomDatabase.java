@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {AnnualGDPEntity.class}, version = 1)
+@Database(entities = {MacroEconomicsEntity.class}, version = 1)
 public abstract class AppRoomDatabase extends RoomDatabase {
     /** TODO: Put file into emulated local storage
      *      Get file from local storage
@@ -19,7 +19,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
      *          reference the database
      */
 
-    public abstract AnnualGDPDao annualGDPDao();
+    public abstract MacroEconomicsDao annualGDPDao();
     private static AppRoomDatabase INSTANCE;
 
     static AppRoomDatabase getDatabase(final Context context) {
