@@ -31,7 +31,7 @@ public class DebtViewModel extends AndroidViewModel {
         mText.setValue("This is Debt fragment");
 
         debtRepository = new DebtRepository(application);
-        debtRepository.findDebtService(2014, 2018);
+        //debtRepository.findDebtService(2014, 2018);
         searchResults = debtRepository.getSearchResults();
     }
 

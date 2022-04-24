@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface FertilizerDao {
     @Query("SELECT * FROM fertilizer WHERE year BETWEEN :startYear AND :endYear")
-    List<ValueAddEntity> findFertilizer(int startYear, int endYear);
+    List<FertilizerEntity> findFertilizer(int startYear, int endYear);
 
     @Insert
     void insertFertilizer(FertilizerEntity valueAddEntity);

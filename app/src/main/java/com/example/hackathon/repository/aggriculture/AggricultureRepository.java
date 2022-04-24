@@ -26,6 +26,7 @@ public class AggricultureRepository {
     //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
     private final MutableLiveData<HashMap<String, List<ValueAddEntity>>> searchResults = new MutableLiveData<>();
     private List<ValueAddEntity> results;
+    private List<FertilizerEntity> resultsFertilizer;
     private HashMap<String, List<ValueAddEntity>> aggregatedData = new HashMap<>();
 
     public AggricultureRepository(Application application) {
@@ -76,7 +77,7 @@ public class AggricultureRepository {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = fertilizerDao.findFertilizer(startYear, endYear);
+            resultsFertilizer = fertilizerDao.findFertilizer(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
             String graphType = "AG2";
             Message msg = Message.obtain();

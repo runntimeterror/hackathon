@@ -30,7 +30,7 @@ public class AgricultureViewModel extends AndroidViewModel {
         super(application);
         mText.setValue("This is Agriculture fragment");
         aggricultureRepository = new AggricultureRepository(application);
-        aggricultureRepository.findValueAdd(2014, 2018);
+       // aggricultureRepository.findValueAdd(2014, 2018);
         searchResults = aggricultureRepository.getSearchResults();
     }
 

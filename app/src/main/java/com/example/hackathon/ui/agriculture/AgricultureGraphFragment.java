@@ -143,7 +143,6 @@ public class AgricultureGraphFragment extends Fragment {
     private Map<String, List<AgricultureGraphFragment.GraphValues>> TransaformData(HashMap<String, List<ValueAddEntity>> rawdata , ArrayList<String> graphs){
         String country = Country.getInstance().getSelectedCountry();
 
-        graphs.add("AG2");
         // get only those values which are selected
         Map<String, List<ValueAddEntity>> deptMap2 = rawdata.entrySet().stream()
                 .filter(map -> graphs.contains(map.getKey()))

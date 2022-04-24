@@ -26,6 +26,7 @@ public class DebtRepository {
     //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
     private final MutableLiveData<HashMap<String, List<DebtServiceEntity>>> searchResults = new MutableLiveData<>();
     private List<DebtServiceEntity> results;
+    private List<TotalReservesEntity> resultsTotalreserves;
     private HashMap<String, List<DebtServiceEntity>> aggregatedData = new HashMap<>();
 
     public DebtRepository(Application application) {
@@ -76,7 +77,7 @@ public class DebtRepository {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = totalReservesDao.findTotalReserves(startYear, endYear);
+            resultsTotalreserves = totalReservesDao.findTotalReserves(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
             String graphType = "DG2";
             Message msg = Message.obtain();

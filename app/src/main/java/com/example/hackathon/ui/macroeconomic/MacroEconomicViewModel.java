@@ -29,7 +29,7 @@ public class MacroEconomicViewModel extends AndroidViewModel {
         mText.setValue("This is Macro Economic fragment");
 
         annualGDPRepository = new AnnualGDPRepository(application);
-        annualGDPRepository.findAnnualGDPs(2014, 2018);
+        //annualGDPRepository.findAnnualGDPs(2014, 2018);
         searchResults = annualGDPRepository.getSearchResults();
     }
 
