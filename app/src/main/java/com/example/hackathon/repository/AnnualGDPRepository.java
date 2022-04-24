@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.hackathon.state.Country;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -37,6 +38,19 @@ public class AnnualGDPRepository {
 //            searchResults.setValue(results);
             String graphType = (String) msg.obj;
             aggregatedData.put(graphType, results);
+
+            // TODO: REMOVE HARDCODED SECOND GRAPH
+            List<AnnualGDPEntity> hardcodedSecondGraph = new ArrayList<>();
+            for (AnnualGDPEntity gdpEntity : results) {
+                AnnualGDPEntity hardcoded = new AnnualGDPEntity();
+                hardcoded.setYear(gdpEntity.getYear());
+                hardcoded.setIndiaGDP(gdpEntity.getChinaGDP());
+                hardcoded.setChinaGDP(gdpEntity.getUsaGDP());
+                hardcoded.setUsaGDP(gdpEntity.getIndiaGDP());
+                hardcodedSecondGraph.add(hardcoded);
+            }
+
+            aggregatedData.put("meg1", hardcodedSecondGraph);
             searchResults.setValue(aggregatedData);
         }
     };
