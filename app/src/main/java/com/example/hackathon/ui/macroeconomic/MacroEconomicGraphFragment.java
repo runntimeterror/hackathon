@@ -169,16 +169,15 @@ public class MacroEconomicGraphFragment extends Fragment {
     private Cartesian3d GetGraph(HashMap<String, List<AnnualGDPEntity>> rawData, ArrayList<String> graphs) {
         Cartesian3d area3d = AnyChart.area3d();
 
-        area3d.xAxis(0).labels().format("${%Value}");
+        area3d.xAxis(0).labels().format("{%Value}");
 
         area3d.animation(true);
 
-        area3d.yAxis(0).title("The Share Price");
-        area3d.xAxis(0).title("Year/Month/Day");
+        area3d.yAxis(0).title("Values");
+        area3d.xAxis(0).title("Year");
         area3d.xAxis(0).labels().padding(5d, 5d, 0d, 5d);
 
-        area3d.title("The cost of ACME\\'s shares<br/>' +\n" +
-                "    '<span style=\"color:#212121; font-size: 13px;\">Statistics was collected from site N during September</span>");
+        area3d.title("Macroeconomic Table");
 
         area3d.title().useHtml(true);
         area3d.title().padding(0d, 0d, 20d, 0d);
@@ -186,8 +185,8 @@ public class MacroEconomicGraphFragment extends Fragment {
 //        HashMap<String, List<GraphValues>> rawData = getRawData();
 
         //     List<DataEntry> seriesData = new ArrayList<>();
-
-        List<DataEntry> seriesData = setData(TransaformData(rawData, graphs));
+        Map<String, List<GraphValues>> transformedData =  TransaformData(rawData, graphs);
+        List<DataEntry> seriesData = setData(transformedData);
 
 //        seriesData.add(new CustomDataEntry("1986", 162, 42));
 //        seriesData.add(new CustomDataEntry("1987", 134, 54));
@@ -213,38 +212,82 @@ public class MacroEconomicGraphFragment extends Fragment {
         Set set = Set.instantiate();
         set.data(seriesData);
 
-
+        Integer noOfGraphs = transformedData.size();
         Mapping series1Data = set.mapAs("{ x: 'x', value: 'value' }");
         Mapping series2Data = set.mapAs("{ x: 'x', value: 'value2' }");
         Mapping series3Data = set.mapAs("{ x: 'x', value: 'value3' }");
         Mapping series4Data = set.mapAs("{ x: 'x', value: 'value4' }");
         Mapping series5Data = set.mapAs("{ x: 'x', value: 'value5' }");
-
+        Mapping series6Data = set.mapAs("{ x: 'x', value: 'value6' }");
 
         Area3d series1 = area3d.area(series1Data);
-        series1.name("ACME Share Price");
+
         series1.hovered().markers(false);
         series1.hatchFill(HatchFillType.BACKWARD_DIAGONAL, "#000", 0.6d, 10d);
 
         Area3d series2 = area3d.area(series2Data);
-        series2.name("The Competitor\\'s Share Price");
+
         series2.hovered().markers(false);
         series2.hatchFill(HatchFillType.DIAGONAL_BRICK, "#000", 0.6d, 10d);
 
         Area3d series3 = area3d.area(series3Data);
-        series3.name("The Competitor\\'s Share Price");
+
         series3.hovered().markers(false);
         series3.hatchFill(HatchFillType.DIAGONAL_CROSS, "#000", 0.6d, 10d);
 
         Area3d series4 = area3d.area(series4Data);
-        series4.name("The Competitor\\'s Share Price");
+
         series4.hovered().markers(false);
         series4.hatchFill(HatchFillType.DASHED_FORWARD_DIAGONAL, "#000", 0.6d, 10d);
 
         Area3d series5 = area3d.area(series5Data);
-        series5.name("The Competitor\\'s Share Price");
+
         series5.hovered().markers(false);
         series5.hatchFill(HatchFillType.DASHED_VERTICAL, "#000", 0.6d, 10d);
+
+        Area3d series6 = area3d.area(series6Data);
+
+        series6.hovered().markers(false);
+        series6.hatchFill(HatchFillType.FORWARD_DIAGONAL, "#000", 0.6d, 10d);
+
+        switch (noOfGraphs) {
+            case 1:
+                series1.name(transformedData.keySet().toArray()[0].toString());
+                break;
+            case 2:
+                series1.name(transformedData.keySet().toArray()[0].toString());
+                series2.name(transformedData.keySet().toArray()[1].toString());
+                    break;
+            case 3:
+                series1.name(transformedData.keySet().toArray()[0].toString());
+                series2.name(transformedData.keySet().toArray()[1].toString());
+                series3.name(transformedData.keySet().toArray()[2].toString());
+                 break;
+            case 4:
+                series1.name(transformedData.keySet().toArray()[0].toString());
+                series2.name(transformedData.keySet().toArray()[1].toString());
+                series3.name(transformedData.keySet().toArray()[2].toString());
+                series4.name(transformedData.keySet().toArray()[3].toString());
+                break;
+            case 5:
+                series1.name(transformedData.keySet().toArray()[0].toString());
+                series2.name(transformedData.keySet().toArray()[1].toString());
+                series3.name(transformedData.keySet().toArray()[2].toString());
+                series4.name(transformedData.keySet().toArray()[3].toString());
+                series5.name(transformedData.keySet().toArray()[4].toString());
+                break;
+            case 6:
+                series1.name(transformedData.keySet().toArray()[0].toString());
+                series2.name(transformedData.keySet().toArray()[1].toString());
+                series3.name(transformedData.keySet().toArray()[2].toString());
+                series4.name(transformedData.keySet().toArray()[3].toString());
+                series5.name(transformedData.keySet().toArray()[4].toString());
+                series6.name(transformedData.keySet().toArray()[5].toString());
+                break;
+        }
+
+
+
 
         area3d.tooltip()
                 .position(Position.CENTER_TOP)
@@ -268,10 +311,11 @@ public class MacroEconomicGraphFragment extends Fragment {
         List<GraphValues> graph3;
         List<GraphValues> graph4;
         List<GraphValues> graph5;
+        List<GraphValues> graph6;
 
         switch (noOfGraphs) {
             case 1:
-                graph1 = transformedData.get("MEG1");
+                graph1 = transformedData.get(transformedData.keySet().toArray()[0]);
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -279,8 +323,8 @@ public class MacroEconomicGraphFragment extends Fragment {
                 }
                 break;
             case 2:
-                graph1 = transformedData.get("MEG1");
-                graph2 = transformedData.get("MEG2");
+                graph1 = transformedData.get(transformedData.keySet().toArray()[0]);
+                graph2 = transformedData.get(transformedData.keySet().toArray()[1]);
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
                     GraphValues g2 = graph2.get(i);
@@ -289,9 +333,9 @@ public class MacroEconomicGraphFragment extends Fragment {
 
                 break;
             case 3:
-                graph1 = transformedData.get("MEG1");
-                graph2 = transformedData.get("MEG2");
-                graph3 = transformedData.get("MEG3");
+                graph1 = transformedData.get(transformedData.keySet().toArray()[0]);
+                graph2 = transformedData.get(transformedData.keySet().toArray()[1]);
+                graph3 = transformedData.get(transformedData.keySet().toArray()[2]);
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -304,10 +348,10 @@ public class MacroEconomicGraphFragment extends Fragment {
                 }
                 break;
             case 4:
-                graph1 = transformedData.get("MEG1");
-                graph2 = transformedData.get("MEG2");
-                graph3 = transformedData.get("MEG3");
-                graph4 = transformedData.get("graph4");
+                graph1 = transformedData.get(transformedData.keySet().toArray()[0]);
+                graph2 = transformedData.get(transformedData.keySet().toArray()[1]);
+                graph3 = transformedData.get(transformedData.keySet().toArray()[2]);
+                graph4 = transformedData.get(transformedData.keySet().toArray()[3]);
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -322,11 +366,11 @@ public class MacroEconomicGraphFragment extends Fragment {
                 }
                 break;
             case 5:
-                graph1 = transformedData.get("graph1");
-                graph2 = transformedData.get("graph2");
-                graph3 = transformedData.get("graph3");
-                graph4 = transformedData.get("graph4");
-                graph5 = transformedData.get("graph5");
+                graph1 = transformedData.get(transformedData.keySet().toArray()[0]);
+                graph2 = transformedData.get(transformedData.keySet().toArray()[1]);
+                graph3 = transformedData.get(transformedData.keySet().toArray()[2]);
+                graph4 = transformedData.get(transformedData.keySet().toArray()[3]);
+                graph5 = transformedData.get(transformedData.keySet().toArray()[4]);
 
                 for (Integer i = 0; i < graph1.size(); i++) {
                     GraphValues g1 = graph1.get(i);
@@ -340,6 +384,30 @@ public class MacroEconomicGraphFragment extends Fragment {
                             g3.getValue(),
                             g4.getValue(),
                             g5.getValue()));
+                }
+                break;
+            case 6:
+                graph1 = transformedData.get(transformedData.keySet().toArray()[0]);
+                graph2 = transformedData.get(transformedData.keySet().toArray()[1]);
+                graph3 = transformedData.get(transformedData.keySet().toArray()[2]);
+                graph4 = transformedData.get(transformedData.keySet().toArray()[3]);
+                graph5 = transformedData.get(transformedData.keySet().toArray()[4]);
+                graph6 = transformedData.get(transformedData.keySet().toArray()[5]);
+
+                for (Integer i = 0; i < graph1.size(); i++) {
+                    GraphValues g1 = graph1.get(i);
+                    GraphValues g2 = graph2.get(i);
+                    GraphValues g3 = graph3.get(i);
+                    GraphValues g4 = graph4.get(i);
+                    GraphValues g5 = graph5.get(i);
+                    GraphValues g6 = graph6.get(i);
+                    seriesData.add(new MacroEconomicGraphFragment.CustomDataEntry(g1.getYear().toString(),
+                            g1.getValue(),
+                            g2.getValue(),
+                            g3.getValue(),
+                            g4.getValue(),
+                            g5.getValue(),
+                            g6.getValue()));
                 }
                 break;
         }
@@ -358,14 +426,12 @@ public class MacroEconomicGraphFragment extends Fragment {
             setValue("value2", value2);
 
         }
-
         CustomDataEntry(String x, Number value, Number value2, Number value3) {
             super(x, value);
             setValue("value2", value2);
             setValue("value3", value3);
 
         }
-
         CustomDataEntry(String x, Number value, Number value2, Number value3, Number value4) {
             super(x, value);
             setValue("value2", value2);
@@ -373,13 +439,20 @@ public class MacroEconomicGraphFragment extends Fragment {
             setValue("value4", value4);
 
         }
-
         CustomDataEntry(String x, Number value, Number value2, Number value3, Number value4, Number value5) {
             super(x, value);
             setValue("value2", value2);
             setValue("value3", value3);
             setValue("value4", value4);
             setValue("value5", value5);
+        }
+        CustomDataEntry(String x, Number value, Number value2, Number value3, Number value4, Number value5, Number value6) {
+            super(x, value);
+            setValue("value2", value2);
+            setValue("value3", value3);
+            setValue("value4", value4);
+            setValue("value5", value5);
+            setValue("value6", value6);
         }
     }
 
