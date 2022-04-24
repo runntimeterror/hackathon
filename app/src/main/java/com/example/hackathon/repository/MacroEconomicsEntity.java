@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.lang.reflect.Field;
+
 @Entity(tableName="macroeconomicstable")
 public class MacroEconomicsEntity {
     @PrimaryKey
@@ -68,148 +70,186 @@ public class MacroEconomicsEntity {
         return year;
     }
 
-    public Long getIndiaGDP() {
-        return indiaGDP;
-    }
+    public Long getValue(String countryCode, String graphCode) {
+        String key = graphCode + countryCode;
+        for (Field field : ((Object) this).getClass().getDeclaredFields()) {
+            String annotation = field.getAnnotation(ColumnInfo.class).toString();
+            if (annotation == key) {
+                try {
+                    return (Long) field.get(this);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-    public Long getChinaGDP() {
-        return chinaGDP;
-    }
-
-    public Long getUsaGDP() {
-        return usaGDP;
+        return 100L;
     }
 
     public void setYear(Integer year) {
         this.year = year;
     }
 
-    public void setIndiaGDP(Long indiaGDP) {
-        this.indiaGDP = indiaGDP;
-    }
-
-    public void setChinaGDP(Long chinaGDP) {
-        this.chinaGDP = chinaGDP;
-    }
-
-    public void setUsaGDP(Long usaGDP) {
-        this.usaGDP = usaGDP;
-    }
-
     public Float getIndiaGrowthRate() {
         return indiaGrowthRate;
     }
 
-    public Float getChinaGrowthRate() {
-        return chinaGrowthRate;
-    }
-
-    public Float getUsaGrowthRate() {
-        return usaGrowthRate;
-    }
-
-    public Float getIndiaBalancePercentOfGDP() {
-        return indiaBalancePercentOfGDP;
-    }
-
-    public Float getChinaBalancePercentOfGDP() {
-        return chinaBalancePercentOfGDP;
-    }
-
-    public Float getUsaBalancePercentOfGDP() {
-        return usaBalancePercentOfGDP;
-    }
-
-    public Long getIndiaForeignDirectInvestment() {
-        return indiaForeignDirectInvestment;
-    }
-
-    public Long getChinaForeignDirectInvestment() {
-        return chinaForeignDirectInvestment;
-    }
-
-    public Long getUsaForeignDirectInvestment() {
-        return usaForeignDirectInvestment;
-    }
-
-    public Float getIndiaForeignDirectInvestmentNetInflows() {
-        return indiaForeignDirectInvestmentNetInflows;
-    }
-
-    public Float getChinaForeignDirectInvestmentNetInflows() {
-        return chinaForeignDirectInvestmentNetInflows;
-    }
-
-    public Float getUsaForeignDirectInvestmentNetInflows() {
-        return usaForeignDirectInvestmentNetInflows;
-    }
-
-    public Float getIndiaNetOutflows() {
-        return indiaNetOutflows;
-    }
-
-    public Float getChinaNetOutflows() {
-        return chinaNetOutflows;
-    }
-
-    public Float getUsaNetOutflows() {
-        return usaNetOutflows;
+    public MacroEconomicsEntity(Integer year, Float indiaGrowthRate, Float chinaGrowthRate, Float usaGrowthRate, Long indiaGDP, Long chinaGDP, Long usaGDP, Float indiaBalancePercentOfGDP, Float chinaBalancePercentOfGDP, Float usaBalancePercentOfGDP, Long indiaForeignDirectInvestment, Long chinaForeignDirectInvestment, Long usaForeignDirectInvestment, Float indiaForeignDirectInvestmentNetInflows, Float chinaForeignDirectInvestmentNetInflows, Float usaForeignDirectInvestmentNetInflows, Float indiaNetOutflows, Float chinaNetOutflows, Float usaNetOutflows) {
+        this.year = year;
+        this.indiaGrowthRate = indiaGrowthRate;
+        this.chinaGrowthRate = chinaGrowthRate;
+        this.usaGrowthRate = usaGrowthRate;
+        this.indiaGDP = indiaGDP;
+        this.chinaGDP = chinaGDP;
+        this.usaGDP = usaGDP;
+        this.indiaBalancePercentOfGDP = indiaBalancePercentOfGDP;
+        this.chinaBalancePercentOfGDP = chinaBalancePercentOfGDP;
+        this.usaBalancePercentOfGDP = usaBalancePercentOfGDP;
+        this.indiaForeignDirectInvestment = indiaForeignDirectInvestment;
+        this.chinaForeignDirectInvestment = chinaForeignDirectInvestment;
+        this.usaForeignDirectInvestment = usaForeignDirectInvestment;
+        this.indiaForeignDirectInvestmentNetInflows = indiaForeignDirectInvestmentNetInflows;
+        this.chinaForeignDirectInvestmentNetInflows = chinaForeignDirectInvestmentNetInflows;
+        this.usaForeignDirectInvestmentNetInflows = usaForeignDirectInvestmentNetInflows;
+        this.indiaNetOutflows = indiaNetOutflows;
+        this.chinaNetOutflows = chinaNetOutflows;
+        this.usaNetOutflows = usaNetOutflows;
     }
 
     public void setIndiaGrowthRate(Float indiaGrowthRate) {
         this.indiaGrowthRate = indiaGrowthRate;
     }
 
+    public Float getChinaGrowthRate() {
+        return chinaGrowthRate;
+    }
+
     public void setChinaGrowthRate(Float chinaGrowthRate) {
         this.chinaGrowthRate = chinaGrowthRate;
+    }
+
+    public Float getUsaGrowthRate() {
+        return usaGrowthRate;
     }
 
     public void setUsaGrowthRate(Float usaGrowthRate) {
         this.usaGrowthRate = usaGrowthRate;
     }
 
+    public Long getIndiaGDP() {
+        return indiaGDP;
+    }
+
+    public void setIndiaGDP(Long indiaGDP) {
+        this.indiaGDP = indiaGDP;
+    }
+
+    public Long getChinaGDP() {
+        return chinaGDP;
+    }
+
+    public void setChinaGDP(Long chinaGDP) {
+        this.chinaGDP = chinaGDP;
+    }
+
+    public Long getUsaGDP() {
+        return usaGDP;
+    }
+
+    public void setUsaGDP(Long usaGDP) {
+        this.usaGDP = usaGDP;
+    }
+
+    public Float getIndiaBalancePercentOfGDP() {
+        return indiaBalancePercentOfGDP;
+    }
+
     public void setIndiaBalancePercentOfGDP(Float indiaBalancePercentOfGDP) {
         this.indiaBalancePercentOfGDP = indiaBalancePercentOfGDP;
+    }
+
+    public Float getChinaBalancePercentOfGDP() {
+        return chinaBalancePercentOfGDP;
     }
 
     public void setChinaBalancePercentOfGDP(Float chinaBalancePercentOfGDP) {
         this.chinaBalancePercentOfGDP = chinaBalancePercentOfGDP;
     }
 
+    public Float getUsaBalancePercentOfGDP() {
+        return usaBalancePercentOfGDP;
+    }
+
     public void setUsaBalancePercentOfGDP(Float usaBalancePercentOfGDP) {
         this.usaBalancePercentOfGDP = usaBalancePercentOfGDP;
+    }
+
+    public Long getIndiaForeignDirectInvestment() {
+        return indiaForeignDirectInvestment;
     }
 
     public void setIndiaForeignDirectInvestment(Long indiaForeignDirectInvestment) {
         this.indiaForeignDirectInvestment = indiaForeignDirectInvestment;
     }
 
+    public Long getChinaForeignDirectInvestment() {
+        return chinaForeignDirectInvestment;
+    }
+
     public void setChinaForeignDirectInvestment(Long chinaForeignDirectInvestment) {
         this.chinaForeignDirectInvestment = chinaForeignDirectInvestment;
+    }
+
+    public Long getUsaForeignDirectInvestment() {
+        return usaForeignDirectInvestment;
     }
 
     public void setUsaForeignDirectInvestment(Long usaForeignDirectInvestment) {
         this.usaForeignDirectInvestment = usaForeignDirectInvestment;
     }
 
+    public Float getIndiaForeignDirectInvestmentNetInflows() {
+        return indiaForeignDirectInvestmentNetInflows;
+    }
+
     public void setIndiaForeignDirectInvestmentNetInflows(Float indiaForeignDirectInvestmentNetInflows) {
         this.indiaForeignDirectInvestmentNetInflows = indiaForeignDirectInvestmentNetInflows;
+    }
+
+    public Float getChinaForeignDirectInvestmentNetInflows() {
+        return chinaForeignDirectInvestmentNetInflows;
     }
 
     public void setChinaForeignDirectInvestmentNetInflows(Float chinaForeignDirectInvestmentNetInflows) {
         this.chinaForeignDirectInvestmentNetInflows = chinaForeignDirectInvestmentNetInflows;
     }
 
+    public Float getUsaForeignDirectInvestmentNetInflows() {
+        return usaForeignDirectInvestmentNetInflows;
+    }
+
     public void setUsaForeignDirectInvestmentNetInflows(Float usaForeignDirectInvestmentNetInflows) {
         this.usaForeignDirectInvestmentNetInflows = usaForeignDirectInvestmentNetInflows;
+    }
+
+    public Float getIndiaNetOutflows() {
+        return indiaNetOutflows;
     }
 
     public void setIndiaNetOutflows(Float indiaNetOutflows) {
         this.indiaNetOutflows = indiaNetOutflows;
     }
 
+    public Float getChinaNetOutflows() {
+        return chinaNetOutflows;
+    }
+
     public void setChinaNetOutflows(Float chinaNetOutflows) {
         this.chinaNetOutflows = chinaNetOutflows;
+    }
+
+    public Float getUsaNetOutflows() {
+        return usaNetOutflows;
     }
 
     public void setUsaNetOutflows(Float usaNetOutflows) {

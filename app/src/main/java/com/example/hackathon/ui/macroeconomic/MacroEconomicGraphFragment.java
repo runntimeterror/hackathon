@@ -1,11 +1,18 @@
 package com.example.hackathon.ui.macroeconomic;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
 import java.util.stream.Collectors;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,6 +34,8 @@ import com.anychart.graphics.vector.hatchfill.HatchFillType;
 import com.example.hackathon.R;
 import com.example.hackathon.state.Country;
 import com.example.hackathon.repository.MacroEconomicsEntity;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,29 +79,83 @@ public class MacroEconomicGraphFragment extends Fragment {
 //                testingRepoViewModel.findAnnualGDPs(2015, 2019);
 //            }
 //        });
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
 
-        Long[][] hardcodedSeedData = {
-                {37029L, 597164L, 5433000L},
-                {3702980L, 597160L, 543300L},
-                {3702098L, 59716L, 543300L},
-                {370298L, 597016L, 543000L},
-                {3702098L, 590716L, 53300L},
-                {370298L, 597106L, 54300L},
-                {370298L, 597016L, 53300L},
-        };
+        try {
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
 
-        int year = 2014;
-        for (Long[] seed : hardcodedSeedData) {
-            MacroEconomicsEntity entity = new MacroEconomicsEntity();
-            entity.setYear(year++);
-            entity.setIndiaGDP(seed[0]);
-            entity.setChinaGDP(seed[1]);
-            entity.setUsaGDP(seed[2]);
+            InputStream input = new URL("https://277hackathoncountrydata.s3.us-west-2.amazonaws.com/annualgdptable.csv").openStream();
+            Reader reader1 = new InputStreamReader(input, "UTF-8");
+//            CSVReader reader = new CSVReader(reader1);
+            CSVReader reader = new CSVReaderBuilder(reader1).withSkipLines(1).build();
+            List<String[]> myEntries = reader.readAll();
 
-            macroEconomicViewModel.insertGDPs(entity);
+            for (String[] entry : myEntries) {
+                MacroEconomicsEntity entity = new MacroEconomicsEntity(
+                        Integer.valueOf(entry[0]),
+                        Float.valueOf(entry[1]),
+                        Float.valueOf(entry[2]),
+                        Float.valueOf(entry[3]),
+                        Long.valueOf(entry[4]),
+                        Long.valueOf(entry[5]),
+                        Long.valueOf(entry[6]),
+                        Float.valueOf(entry[7]),
+                        Float.valueOf(entry[8]),
+                        Float.valueOf(entry[9]),
+                        Long.valueOf(entry[10]),
+                        Long.valueOf(entry[11]),
+                        Long.valueOf(entry[12]),
+                        Float.valueOf(entry[13]),
+                        Float.valueOf(entry[14]),
+                        Float.valueOf(entry[15]),
+                        Float.valueOf(entry[16]),
+                        Float.valueOf(entry[17]),
+                        Float.valueOf(entry[18])
+                    );
+
+                macroEconomicViewModel.insertGDPs(entity);
+
+//                entity.setYear(Integer.valueOf(entry[0]));
+//                entity.setIndiaGrowthRate(Float.valueOf(entry[1]));
+//                entity.setChinaGrowthRate(Float.valueOf(entry[2]));
+//                entity.setUsaGrowthRate(Float.valueOf(entry[3]));
+//                entity.setIndiaGDP(Long.valueOf(entry[1]));
+//                entity.setChinaGDP(Long.valueOf(entry[2]));
+//                entity.setUsaGDP(Long.valueOf(entry[3]));
+            }
+
+
+            System.out.println(myEntries);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        macroEconomicViewModel.findAnnualGDPs(2014, 2020);
+//        Long[][] hardcodedSeedData = {
+//                {37029L, 597164L, 5433000L},
+//                {3702980L, 597160L, 543300L},
+//                {3702098L, 59716L, 543300L},
+//                {370298L, 597016L, 543000L},
+//                {3702098L, 590716L, 53300L},
+//                {370298L, 597106L, 54300L},
+//                {370298L, 597016L, 53300L},
+//        };
+//
+//        int year = 2014;
+//        for (Long[] seed : hardcodedSeedData) {
+//            MacroEconomicsEntity entity = new MacroEconomicsEntity();
+//            entity.setYear(year++);
+//            entity.setIndiaGDP(seed[0]);
+//            entity.setChinaGDP(seed[1]);
+//            entity.setUsaGDP(seed[2]);
+//
+//            macroEconomicViewModel.insertGDPs(entity);
+//        }
+//
+//        macroEconomicViewModel.findAnnualGDPs(2014, 2020);
 
 //        try {
 ////            AssetFileDescriptor descriptor = getContext().getAssets().open("annualgdptable.csv");
@@ -129,11 +192,11 @@ public class MacroEconomicGraphFragment extends Fragment {
         return root;
     }
 
-    private Map<String, List<GraphValues>> TransaformData(HashMap<String, List<AnnualGDPEntity>> rawdata , ArrayList<String> graphs){
+    private Map<String, List<GraphValues>> TransaformData(HashMap<String, List<MacroEconomicsEntity>> rawdata , ArrayList<String> graphs){
         String country = Country.getInstance().getSelectedCountry();
 
         // get only those values which are selected
-        Map<String, List<AnnualGDPEntity>> deptMap2 = rawdata.entrySet().stream()
+        Map<String, List<MacroEconomicsEntity>> deptMap2 = rawdata.entrySet().stream()
                 .filter(map -> graphs.contains(map.getKey()))
                 .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 
@@ -145,18 +208,19 @@ public class MacroEconomicGraphFragment extends Fragment {
                     .map(p -> {
                         GraphValues g = new GraphValues();
                         g.setYear(p.getYear());
-                        switch (country) {
-                            case Country.INDIA:
-                                g.setValue( p.getIndiaGDP());
-                                break;
-                            case Country.USA:
-                                g.setValue( p.getUsaGDP());
-                                break;
-                            case Country.CHINA:
-                                g.setValue( p.getChinaGDP());
-                                break;
-                        }
-                                return  g;
+                        g.setValue(p.getValue(country, k));
+//                        switch (country) {
+//                            case Country.INDIA:
+//                                g.setValue( p.getIndiaGDP());
+//                                break;
+//                            case Country.USA:
+//                                g.setValue( p.getUsaGDP());
+//                                break;
+//                            case Country.CHINA:
+//                                g.setValue( p.getChinaGDP());
+//                                break;
+//                        }
+                        return  g;
                     })
                     .collect(Collectors.toList());
 
@@ -165,7 +229,7 @@ public class MacroEconomicGraphFragment extends Fragment {
 
         return transformedData;
     }
-    private Cartesian3d GetGraph(HashMap<String, List<AnnualGDPEntity>> rawData, ArrayList<String> graphs) {
+    private Cartesian3d GetGraph(HashMap<String, List<MacroEconomicsEntity>> rawData, ArrayList<String> graphs) {
         Cartesian3d area3d = AnyChart.area3d();
 
         area3d.xAxis(0).labels().format("{%Value}");

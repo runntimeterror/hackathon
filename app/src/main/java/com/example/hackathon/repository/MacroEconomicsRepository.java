@@ -37,17 +37,17 @@ public class MacroEconomicsRepository {
             aggregatedData.put(graphType, results);
 
             // TODO: REMOVE HARDCODED SECOND GRAPH
-            List<MacroEconomicsEntity> hardcodedSecondGraph = new ArrayList<>();
-            for (MacroEconomicsEntity gdpEntity : results) {
-                MacroEconomicsEntity hardcoded = new MacroEconomicsEntity();
-                hardcoded.setYear(gdpEntity.getYear());
-                hardcoded.setIndiaGDP(gdpEntity.getChinaGDP());
-                hardcoded.setChinaGDP(gdpEntity.getUsaGDP());
-                hardcoded.setUsaGDP(gdpEntity.getIndiaGDP());
-                hardcodedSecondGraph.add(hardcoded);
-            }
-
-            aggregatedData.put("MEG1", hardcodedSecondGraph);
+//            List<MacroEconomicsEntity> hardcodedSecondGraph = new ArrayList<>();
+//            for (MacroEconomicsEntity gdpEntity : results) {
+//                MacroEconomicsEntity hardcoded = new MacroEconomicsEntity();
+//                hardcoded.setYear(gdpEntity.getYear());
+//                hardcoded.setIndiaGDP(gdpEntity.getChinaGDP());
+//                hardcoded.setChinaGDP(gdpEntity.getUsaGDP());
+//                hardcoded.setUsaGDP(gdpEntity.getIndiaGDP());
+//                hardcodedSecondGraph.add(hardcoded);
+//            }
+//
+//            aggregatedData.put("MEG1", hardcodedSecondGraph);
             searchResults.setValue(aggregatedData);
         }
     };
