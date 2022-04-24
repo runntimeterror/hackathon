@@ -8,14 +8,20 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.hackathon.state.Country;
+
+import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AnnualGDPRepository {
     private final AnnualGDPDao annualGDPDao;
-    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
+//    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
+    private final MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults = new MutableLiveData<>();
     private List<AnnualGDPEntity> results;
+    private HashMap<String, List<AnnualGDPEntity>> aggregatedData = new HashMap<>();
 
     public AnnualGDPRepository(Application application) {
         AppRoomDatabase db;
@@ -26,8 +32,12 @@ public class AnnualGDPRepository {
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
+//            Country.getInstance();
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: handler.handleMessage");
-            searchResults.setValue(results);
+//            searchResults.setValue(results);
+            String graphType = (String) msg.obj;
+            aggregatedData.put(graphType, results);
+            searchResults.setValue(aggregatedData);
         }
     };
 
@@ -37,7 +47,12 @@ public class AnnualGDPRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             results = annualGDPDao.findAnnualGDP(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            handler.sendEmptyMessage(0);
+//            handler.sendEmptyMessage(0);
+            String graphType = "meg2";
+            Message msg = Message.obtain();
+            msg.obj = graphType;
+            msg.setTarget(handler);
+            msg.sendToTarget();
         });
         executor.shutdown();
     }
@@ -53,8 +68,12 @@ public class AnnualGDPRepository {
         executor.shutdown();
     }
 
-    public MutableLiveData<List<AnnualGDPEntity>> getSearchResults() {
-        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: getSearchResults");
+//    public MutableLiveData<List<AnnualGDPEntity>> getSearchResults() {
+//        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: getSearchResults");
+//        return searchResults;
+//    }
+
+    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults(){
         return searchResults;
     }
 

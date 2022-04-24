@@ -9,11 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.AnnualGDPRepository;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class TestingRepoViewModel extends AndroidViewModel {
     private AnnualGDPRepository annualGDPRepository;
-    private MutableLiveData<List<AnnualGDPEntity>> searchResults;
+//    private MutableLiveData<List<AnnualGDPEntity>> searchResults;
+    private MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults;
 
     public TestingRepoViewModel(Application application) {
         super(application);
@@ -22,7 +24,7 @@ public class TestingRepoViewModel extends AndroidViewModel {
         searchResults = annualGDPRepository.getSearchResults();
     }
 
-    public MutableLiveData<List<AnnualGDPEntity>> getSearchResults() {
+    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults() {
         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: getSearchResults");
         return searchResults;
     }

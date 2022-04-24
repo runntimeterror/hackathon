@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -49,11 +50,11 @@ public class MacroEconomicGraphFragment extends Fragment {
         testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
         testingRepoViewModel.getSearchResults().observe(
                 getViewLifecycleOwner(),
-                new Observer<List<AnnualGDPEntity>>() {
+                new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
                     @Override
-                    public void onChanged(@Nullable final List<AnnualGDPEntity> gdps) {
+                    public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
                         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL",
-                                "MacroEconomicFragment:searchResults.observer.onChanged Length:" + gdps.size());
+                                "MacroEconomicFragment:searchResults.observer.onChanged Length:" + gdps.get("meg2").size());
 
                         AnyChartView anyChartView = (AnyChartView) root.findViewById(R.id.any_chart_view);
                         anyChartView.setProgressBar((ProgressBar) root.findViewById(R.id.progressBar));
