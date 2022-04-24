@@ -25,9 +25,8 @@ import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.hatchfill.HatchFillType;
 import com.example.hackathon.R;
-import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.state.Country;
-import com.example.hackathon.ui.debt.DebtGraphFragment;
+import com.example.hackathon.repository.MacroEconomicsEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,9 +49,9 @@ public class MacroEconomicGraphFragment extends Fragment {
 //        testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
        macroEconomicViewModel.getSearchResults().observe(
                 getViewLifecycleOwner(),
-                new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
+                new Observer<HashMap<String, List<MacroEconomicsEntity>>>() {
                     @Override
-                    public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
+                    public void onChanged(@Nullable final HashMap<String, List<MacroEconomicsEntity>> gdps) {
                         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL",
                                 "MacroEconomicFragment:searchResults.observer.onChanged Length:" + gdps.get("MEG2").size());
 
@@ -84,7 +83,7 @@ public class MacroEconomicGraphFragment extends Fragment {
 
         int year = 2014;
         for (Long[] seed : hardcodedSeedData) {
-            AnnualGDPEntity entity = new AnnualGDPEntity();
+            MacroEconomicsEntity entity = new MacroEconomicsEntity();
             entity.setYear(year++);
             entity.setIndiaGDP(seed[0]);
             entity.setChinaGDP(seed[1]);

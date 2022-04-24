@@ -8,26 +8,23 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.hackathon.state.Country;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AnnualGDPRepository {
-    private final AnnualGDPDao annualGDPDao;
+public class MacroEconomicsRepository {
+    private final MacroEconomicsDao macroEconomicsDao;
 //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
-    private final MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults = new MutableLiveData<>();
-    private List<AnnualGDPEntity> results;
-    private HashMap<String, List<AnnualGDPEntity>> aggregatedData = new HashMap<>();
+    private final MutableLiveData<HashMap<String, List<MacroEconomicsEntity>>> searchResults = new MutableLiveData<>();
+    private List<MacroEconomicsEntity> results;
+    private HashMap<String, List<MacroEconomicsEntity>> aggregatedData = new HashMap<>();
 
-    public AnnualGDPRepository(Application application) {
+    public MacroEconomicsRepository(Application application) {
         AppRoomDatabase db;
         db = AppRoomDatabase.getDatabase(application);
-        annualGDPDao = db.annualGDPDao();
+        macroEconomicsDao = db.annualGDPDao();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -40,9 +37,9 @@ public class AnnualGDPRepository {
             aggregatedData.put(graphType, results);
 
             // TODO: REMOVE HARDCODED SECOND GRAPH
-            List<AnnualGDPEntity> hardcodedSecondGraph = new ArrayList<>();
-            for (AnnualGDPEntity gdpEntity : results) {
-                AnnualGDPEntity hardcoded = new AnnualGDPEntity();
+            List<MacroEconomicsEntity> hardcodedSecondGraph = new ArrayList<>();
+            for (MacroEconomicsEntity gdpEntity : results) {
+                MacroEconomicsEntity hardcoded = new MacroEconomicsEntity();
                 hardcoded.setYear(gdpEntity.getYear());
                 hardcoded.setIndiaGDP(gdpEntity.getChinaGDP());
                 hardcoded.setChinaGDP(gdpEntity.getUsaGDP());
@@ -59,7 +56,7 @@ public class AnnualGDPRepository {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
-            results = annualGDPDao.findAnnualGDP(startYear, endYear);
+            results = macroEconomicsDao.findAnnualGDP(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
             String graphType = "MEG2";
@@ -71,11 +68,11 @@ public class AnnualGDPRepository {
         executor.shutdown();
     }
 
-    public void insertAnnualGDPs(AnnualGDPEntity annualGDPEntity) {
+    public void insertAnnualGDPs(MacroEconomicsEntity macroEconomicsEntity) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
-            annualGDPDao.insertAnnualGDP(annualGDPEntity);
+            macroEconomicsDao.insertAnnualGDP(macroEconomicsEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
 //            handler.sendEmptyMessage(0);
         });
@@ -87,7 +84,7 @@ public class AnnualGDPRepository {
 //        return searchResults;
 //    }
 
-    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults(){
+    public MutableLiveData<HashMap<String, List<MacroEconomicsEntity>>> getSearchResults(){
         return searchResults;
     }
 
