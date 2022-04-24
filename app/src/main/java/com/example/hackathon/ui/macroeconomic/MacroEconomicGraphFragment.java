@@ -36,6 +36,7 @@ import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.CurrentAccountBalanceEntity;
 import com.example.hackathon.state.Country;
+import com.example.hackathon.state.Persona;
 import com.example.hackathon.ui.debt.DebtGraphFragment;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -71,6 +72,11 @@ public class MacroEconomicGraphFragment extends Fragment {
                     }
                 }
         );
+
+       String userPersona = Persona.getInstance().getUserPersona();
+        if(userPersona.equals(Persona.DATA_SCIENTIST)) {
+            root.findViewById(R.id.buttonMacroGraphNotes).setVisibility(View.VISIBLE);
+        }
 
 //        binding.testQueryButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
