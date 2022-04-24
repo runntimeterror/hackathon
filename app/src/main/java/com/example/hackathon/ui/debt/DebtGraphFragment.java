@@ -260,7 +260,7 @@ public class DebtGraphFragment extends Fragment {
         area3d.xAxis(0).title("Year");
         area3d.xAxis(0).labels().padding(5d, 5d, 0d, 5d);
 
-        area3d.title("Macroeconomic Table");
+        area3d.title("Debt Table");
 
         area3d.title().useHtml(true);
         area3d.title().padding(0d, 0d, 20d, 0d);
