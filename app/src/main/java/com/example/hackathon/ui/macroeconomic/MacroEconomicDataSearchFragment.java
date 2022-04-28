@@ -48,9 +48,19 @@ public class MacroEconomicDataSearchFragment extends Fragment {
                     Toast.makeText(view.getContext(), "Select at least one data source", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+
                 MacroEconomicFragment parentFragment = (MacroEconomicFragment) getParentFragment();
                 (parentFragment.getMacroEconomicViewModel()).setCheckedGraphs(selectedStrings);
+
+                if (selectedStrings.contains("MEG1")){
+                    (parentFragment.getMacroEconomicViewModel()).findCurrentBalances(1960, 2020);
+                }
+                if (selectedStrings.contains("MEG22")){
+                    (parentFragment.getMacroEconomicViewModel()).findAnnualGDPs(1960, 2020);
+                }
                 parentFragment.replaceFragments(MacroEconomicGraphFragment.class);
+
             }
         });
 

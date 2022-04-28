@@ -21,9 +21,10 @@ public class AnnualGDPRepository {
     private final AnnualGDPDao annualGDPDao;
     private final CurrentAccountBalanceDao currentAccountBalanceDao;
 //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
-    private final MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults = new MutableLiveData<>();
+    private final MutableLiveData<HashMap<String, Object>> searchResults = new MutableLiveData<>();
     private List<AnnualGDPEntity> results;
-    private HashMap<String, List<AnnualGDPEntity>> aggregatedData = new HashMap<>();
+    private List<CurrentAccountBalanceEntity> resultsCurrentAccountBalanceEntity;
+    private HashMap<String, Object> aggregatedData = new HashMap<>();
 
     public AnnualGDPRepository(Application application) {
         AppRoomDatabase db;
@@ -37,7 +38,14 @@ public class AnnualGDPRepository {
         public void handleMessage(Message msg) {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: handler.handleMessage");
             String graphType = (String) msg.obj;
-            aggregatedData.put(graphType, results);
+            if (graphType == "MEG1"){
+                aggregatedData.put(graphType, resultsCurrentAccountBalanceEntity);
+            }
+            if (graphType == "MEG2"){
+                aggregatedData.put(graphType, results);
+
+            }
+
             searchResults.setValue(aggregatedData);
         }
     };
@@ -74,7 +82,22 @@ public class AnnualGDPRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
             currentAccountBalanceDao.insertCurrentAccountBalance(currentAccountBalanceEntity);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
-//            handler.sendEmptyMessage(0);
+            handler.sendEmptyMessage(0);
+        });
+        executor.shutdown();
+    }
+
+    public void findTotalCurrentBalance(int startYear, int endYear) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
+            resultsCurrentAccountBalanceEntity = currentAccountBalanceDao.findCurrentAccountBalance(startYear, endYear);
+            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
+            String graphType = "MEG1";
+            Message msg = Message.obtain();
+            msg.obj = graphType;
+            msg.setTarget(handler);
+            msg.sendToTarget();
         });
         executor.shutdown();
     }
@@ -84,7 +107,7 @@ public class AnnualGDPRepository {
 //        return searchResults;
 //    }
 
-    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults(){
+    public MutableLiveData<HashMap<String, Object>> getSearchResults(){
         return searchResults;
     }
 

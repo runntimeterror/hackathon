@@ -32,6 +32,8 @@ import com.anychart.graphics.vector.hatchfill.HatchFillType;
 import com.example.hackathon.R;
 import com.example.hackathon.repository.AnnualGDPEntity;
 import com.example.hackathon.repository.CurrentAccountBalanceEntity;
+import com.example.hackathon.repository.debt.DebtServiceEntity;
+import com.example.hackathon.repository.debt.TotalReservesEntity;
 import com.example.hackathon.state.Country;
 import com.example.hackathon.state.Persona;
 import com.opencsv.CSVReader;
@@ -65,9 +67,9 @@ public class MacroEconomicGraphFragment extends Fragment {
 //        testingRepoViewModel = new ViewModelProvider(this).get(TestingRepoViewModel.class);
        macroEconomicViewModel.getSearchResults().observe(
                 getViewLifecycleOwner(),
-               new Observer<HashMap<String, List<AnnualGDPEntity>>>() {
+               new Observer<HashMap<String, Object>>() {
                    @Override
-                   public void onChanged(@Nullable final HashMap<String, List<AnnualGDPEntity>> gdps) {
+                   public void onChanged(@Nullable final HashMap<String, Object> gdps) {
                         AnyChartView anyChartView = (AnyChartView) root.findViewById(R.id.any_chart_view);
                         anyChartView.setProgressBar((ProgressBar) root.findViewById(R.id.progressBar));
 
@@ -209,19 +211,32 @@ public class MacroEconomicGraphFragment extends Fragment {
         return root;
     }
 
-    private Map<String, List<GraphValues>> TransaformData(HashMap<String, List<AnnualGDPEntity>> rawdata , ArrayList<String> graphs){
+    private Map<String, List<GraphValues>> TransaformData(HashMap<String, Object> rawdata , ArrayList<String> graphs){
         String country = Country.getInstance().getSelectedCountry();
 
         // get only those values which are selected
-        Map<String, List<AnnualGDPEntity>> deptMap2 = rawdata.entrySet().stream()
+        Map<String, Object> deptMap2 = rawdata.entrySet().stream()
                 .filter(map -> graphs.contains(map.getKey()))
                 .collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 
         Map<String, List<GraphValues>> transformedData = new HashMap<>();
 
+
+
         deptMap2.forEach((k,v) ->{
         long val;
-            List<GraphValues> employees = v.stream()
+            List<AnnualGDPEntity>  raw1data = new ArrayList<>();
+            for (Object aList :(ArrayList<Object>)v) {
+                Class cls = aList.getClass();
+                if (cls.getName().toLowerCase().contains("currentaccountbalanceentity")){
+                    CurrentAccountBalanceEntity t = (CurrentAccountBalanceEntity)aList;
+                    raw1data.add(new AnnualGDPEntity(t.getYear(), t.getIndiaGDP(), t.getChinaGDP(), t.getUsaGDP()));
+                }else {
+                    raw1data.add((AnnualGDPEntity)aList);
+                }
+            }
+
+            List<GraphValues> employees = raw1data.stream()
                     .map(p -> {
                         GraphValues g = new GraphValues();
                         g.setYear(p.getYear());
@@ -245,7 +260,8 @@ public class MacroEconomicGraphFragment extends Fragment {
 
         return transformedData;
     }
-    private Cartesian3d GetGraph(HashMap<String, List<AnnualGDPEntity>> rawData, ArrayList<String> graphs) {
+
+    private Cartesian3d GetGraph(HashMap<String, Object> rawData, ArrayList<String> graphs) {
         Cartesian3d area3d = AnyChart.area3d();
 
         area3d.xAxis(0).labels().format("{%Value}");

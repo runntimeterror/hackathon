@@ -24,10 +24,10 @@ public class DebtRepository {
     private final TotalReservesDao totalReservesDao;
     //    private CurrentAccountBalanceDao currentAccountBalanceDao;
     //    private final MutableLiveData<List<AnnualGDPEntity>> searchResults = new MutableLiveData<>();
-    private final MutableLiveData<HashMap<String, List<DebtServiceEntity>>> searchResults = new MutableLiveData<>();
+    private final MutableLiveData<HashMap<String, Object>> searchResults = new MutableLiveData<>();
     private List<DebtServiceEntity> results;
     private List<TotalReservesEntity> resultsTotalreserves;
-    private HashMap<String, List<DebtServiceEntity>> aggregatedData = new HashMap<>();
+    private HashMap<String, Object> aggregatedData = new HashMap<>();
 
     public DebtRepository(Application application) {
         AppRoomDatabase db;
@@ -42,7 +42,13 @@ public class DebtRepository {
         public void handleMessage(Message msg) {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: handler.handleMessage");
             String graphType = (String) msg.obj;
-            aggregatedData.put(graphType, results);
+            if (graphType == "DG1"){
+                aggregatedData.put(graphType, resultsTotalreserves);
+            }
+            if (graphType == "DG2"){
+                aggregatedData.put(graphType, results);
+
+            }
             searchResults.setValue(aggregatedData);
         }
     };
@@ -79,7 +85,7 @@ public class DebtRepository {
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- prequery");
             resultsTotalreserves = totalReservesDao.findTotalReserves(startYear, endYear);
             Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: findAnnualGDP -- postquery");
-            String graphType = "DG2";
+            String graphType = "DG1";
             Message msg = Message.obtain();
             msg.obj = graphType;
             msg.setTarget(handler);
@@ -99,23 +105,8 @@ public class DebtRepository {
         executor.shutdown();
     }
 
-//    public void insertCurrentAccountBalances(CurrentAccountBalanceEntity currentAccountBalanceEntity) {
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//        executor.submit(() -> {
-//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- prequery");
-//            value.insertCurrentAccountBalance(currentAccountBalanceEntity);
-//            Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: insertAnnualGDP -- postquery");
-////            handler.sendEmptyMessage(0);
-//        });
-//        executor.shutdown();
-//    }
 
-//    public MutableLiveData<List<AnnualGDPEntity>> getSearchResults() {
-//        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "AnnualGDPRepository: getSearchResults");
-//        return searchResults;
-//    }
-
-    public MutableLiveData<HashMap<String, List<DebtServiceEntity>>> getSearchResults(){
+    public MutableLiveData<HashMap<String, Object>> getSearchResults(){
         return searchResults;
     }
 }
