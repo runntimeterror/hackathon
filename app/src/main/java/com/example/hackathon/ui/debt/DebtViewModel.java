@@ -22,7 +22,7 @@ import java.util.List;
 public class DebtViewModel extends AndroidViewModel {
     private DebtRepository debtRepository;
     //    private AnnualGDPRepository annualGDPRepository;
-    private MutableLiveData<HashMap<String, List<DebtServiceEntity>>> searchResults;
+    private MutableLiveData<HashMap<String, Object>> searchResults;
     private final MutableLiveData<String> mText = new MutableLiveData<>();
     private ArrayList<String> checkedGraphs;
 
@@ -48,7 +48,7 @@ public class DebtViewModel extends AndroidViewModel {
     }
 
 
-    public MutableLiveData<HashMap<String, List<DebtServiceEntity>>> getSearchResults() {
+    public MutableLiveData<HashMap<String, Object>> getSearchResults() {
         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: getSearchResults");
         return searchResults;
     }
@@ -62,10 +62,10 @@ public class DebtViewModel extends AndroidViewModel {
         debtRepository.insertDebtService(debtServiceEntity);
     }
 
-//    public void findTotalReserves(int startYear, int endYear) {
-//        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: findAnnualGDP");
-//        debtRepository.findTotalService(startYear, endYear);
-//    }
+    public void findTotalReserves(int startYear, int endYear) {
+        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: findAnnualGDP");
+        debtRepository.findTotalService(startYear, endYear);
+    }
 
     public void insertTotalReserves(TotalReservesEntity totalReservesEntity) {
         debtRepository.insertTotalReserves(totalReservesEntity);

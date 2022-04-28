@@ -14,12 +14,11 @@ import com.example.hackathon.repository.CurrentAccountBalanceEntity;
 import java.util.ArrayList;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class MacroEconomicViewModel extends AndroidViewModel {
     private AnnualGDPRepository annualGDPRepository;
 //    private AnnualGDPRepository annualGDPRepository;
-    private MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> searchResults;
+    private MutableLiveData<HashMap<String, Object>> searchResults;
     private final MutableLiveData<String> mText = new MutableLiveData<>();
     private ArrayList<String> checkedGraphs;
 
@@ -46,7 +45,7 @@ public class MacroEconomicViewModel extends AndroidViewModel {
     }
 
 
-    public MutableLiveData<HashMap<String, List<AnnualGDPEntity>>> getSearchResults() {
+    public MutableLiveData<HashMap<String, Object>> getSearchResults() {
         Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: getSearchResults");
         return searchResults;
     }
@@ -62,5 +61,10 @@ public class MacroEconomicViewModel extends AndroidViewModel {
 
     public void insertCurrentAccountBalances(CurrentAccountBalanceEntity currentAccountBalanceEntity) {
         annualGDPRepository.insertCurrentAccountBalances(currentAccountBalanceEntity);
+    }
+
+    public void findCurrentBalances(int startYear, int endYear) {
+        Log.println(Log.INFO, "TESTINGREPOVIEWMODEL", "TestingRepoViewModel: findAnnualGDP");
+        annualGDPRepository.findTotalCurrentBalance(startYear, endYear);
     }
 }

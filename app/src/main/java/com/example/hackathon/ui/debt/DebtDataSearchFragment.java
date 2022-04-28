@@ -52,6 +52,13 @@ public class DebtDataSearchFragment extends Fragment {
                 }
                 DebtFragment parentFragment = (DebtFragment) getParentFragment();
                 (parentFragment.getDebtViewModel()).setCheckedGraphs(selectedStrings);
+
+                if (selectedStrings.contains("DG1")){
+                    (parentFragment.getDebtViewModel()).findTotalReserves(1960, 2020);
+                }
+                if (selectedStrings.contains("DG2")){
+                    (parentFragment.getDebtViewModel()).findDebt(1960, 2020);
+                }
                 parentFragment.replaceFragments(DebtGraphFragment.class);
             }
         });

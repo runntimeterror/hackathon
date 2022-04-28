@@ -11,7 +11,7 @@ import java.util.List;
 
 @Dao
 public interface DebtServiceDao {
-    @Query("SELECT * FROM fertilizer WHERE year BETWEEN :startYear AND :endYear")
+    @Query("SELECT * FROM debtservice WHERE year BETWEEN :startYear AND :endYear")
     List<DebtServiceEntity> findDebtService(int startYear, int endYear);
 
     @Insert
